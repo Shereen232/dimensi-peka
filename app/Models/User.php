@@ -9,19 +9,29 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    // Nama tabel
     protected $table = 'users';
+
+    // Primary key custom
+    protected $primaryKey = 'id_user';
+
+    // Tipe primary key (default: int, kalau UUID ganti ke string)
+    public $incrementing = true;
+    protected $keyType = 'int';
+
+    // Tanggal yang di-manage otomatis oleh Laravel
+    public $timestamps = false; // karena kamu pakai created_at saja (tanpa updated_at)
 
     protected $fillable = [
         'username',
         'email',
         'password',
         'role',
+        'created_at',
         'login_at',
     ];
 
     protected $hidden = [
         'password',
-        'remember_token',
     ];
 }
-
