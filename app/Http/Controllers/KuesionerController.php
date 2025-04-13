@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
+use App\Models\Option;
 use App\Models\Question;
 use Illuminate\Http\Request;
 
@@ -11,7 +13,10 @@ class KuesionerController extends Controller
     public function index()
     {
         $questions = Question::all();
-        return view('kuesioner.index', compact('questions'));
+        $options = Option::all();
+        $answer = Answer::where('user_id', 1)->first();
+        if ($answer) return redirect()->route('kuesioner.result');
+        return view('kuesioner.index', compact('questions', 'options'));
     }
 
     // Tampilkan form tambah pertanyaan
@@ -23,53 +28,25 @@ class KuesionerController extends Controller
     // Simpan pertanyaan baru
     public function store(Request $request)
     {
-        $request->validate([
-            'kode' => 'required|unique:questions,kode|max:5',
-            'pertanyaan' => 'required|string',
-            'kategori' => 'required|in:E,P,H,C,Pro',
-        ]);
+        $answer = $request->post();
+        $questions = Question::all();
+        foreach ($questions as $question) {
+            Answer::create([
+                'user_id' => 1,
+                'question_id' => $question->id,
+                'option_id' => $answer['answers'.$question->id],
+            ]);
+        }
 
-        Question::create([
-            'kode' => $request->kode,
-            'pertanyaan' => $request->pertanyaan,
-            'kategori' => $request->kategori,
-        ]);
-
-        return redirect()->route('kuesioner.index')->with('success', 'Pertanyaan berhasil ditambahkan.');
+        return redirect()->route('kuesioner.index')->with('success', 'Jawaban berhasil dikirim.');
     }
 
-    // Tampilkan form edit
-    public function edit($id)
+    public function show()
     {
-        $question = Question::findOrFail($id);
-        return view('kuesioner.edit', compact('question'));
-    }
-
-    // Update pertanyaan
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'kode' => 'required|max:5|unique:questions,kode,' . $id,
-            'pertanyaan' => 'required|string',
-            'kategori' => 'required|in:E,P,H,C,Pro',
-        ]);
-
-        $question = Question::findOrFail($id);
-        $question->update([
-            'kode' => $request->kode,
-            'pertanyaan' => $request->pertanyaan,
-            'kategori' => $request->kategori,
-        ]);
-
-        return redirect()->route('kuesioner.index')->with('success', 'Pertanyaan berhasil diupdate.');
-    }
-
-    // Hapus pertanyaan
-    public function destroy($id)
-    {
-        $question = Question::findOrFail($id);
-        $question->delete();
-
-        return redirect()->route('kuesioner.index')->with('success', 'Pertanyaan berhasil dihapus.');
+        $questions = Question::all();
+        $options = Option::all();
+        $answers = Answer::all();
+        $answers = $answers->pluck('option_id', 'question_id')->toArray();
+        return view('kuesioner.result', compact('questions', 'options', 'answers'));
     }
 }

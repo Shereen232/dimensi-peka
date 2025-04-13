@@ -4,8 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+class Answer extends Model
 {
-    protected $fillable = ['kode', 'pertanyaan', 'kategori'];
+    protected $guarded = ['id'];
     public $timestamps = false;
 }

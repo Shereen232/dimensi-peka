@@ -18,33 +18,24 @@
 
     {{-- Form --}}
     <form action="#" method="POST">
-      {{-- @csrf --}}
+      @csrf
 
       <div class="grid grid-cols-1 gap-6">
         @foreach($questions as $index => $q)
         <div class="p-5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 shadow-sm">
           <p class="mb-4 font-medium text-gray-800 dark:text-gray-100">
             {{ $index + 1 }}. {{ $q->pertanyaan }}
-          </p>
+          </p> 
 
-          <div class="flex flex-col md:flex-row md:space-x-6 space-y-2 md:space-y-0">
-            <label class="inline-flex items-center">
-              <input type="radio" name="answers[{{ $q->id }}]" value="0" required
-                     class="form-radio text-purple-600 focus:ring-purple-500">
-              <span class="ml-2 text-gray-700 dark:text-gray-300">Tidak Pernah</span>
-            </label>
-
-            <label class="inline-flex items-center">
-              <input type="radio" name="answers[{{ $q->id }}]" value="1"
-                     class="form-radio text-purple-600 focus:ring-purple-500">
-              <span class="ml-2 text-gray-700 dark:text-gray-300">Kadang-kadang</span>
-            </label>
-
-            <label class="inline-flex items-center">
-              <input type="radio" name="answers[{{ $q->id }}]" value="2"
-                     class="form-radio text-purple-600 focus:ring-purple-500">
-              <span class="ml-2 text-gray-700 dark:text-gray-300">Sering</span>
-            </label>
+          <div class="flex flex-col md:flex-row">
+            @foreach ($options as $option)
+              @if ($option->question_id == $q->id)
+              <label class="inline-flex items-center ml-2">
+                <input type="radio" name="answers{{ $q->id }}" value="{{$option->id}}" required class="form-radio text-purple-600 focus:ring-purple-500">
+                <span class="ml-4 text-gray-700 dark:text-gray-300">{{$option->text}}</span>
+              </label>
+              @endif
+            @endforeach
           </div>
         </div>
         @endforeach

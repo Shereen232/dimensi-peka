@@ -21,6 +21,7 @@ Route::prefix('user')->name('user.')->group(function () {
 // Routes untuk menu Kuesioner
 Route::prefix('kuesioner')->name('kuesioner.')->group(function () {
     Route::get('/', [KuesionerController::class, 'index'])->name('index');
+    Route::get('/result', [KuesionerController::class, 'show'])->name('result');
     Route::get('/create', [KuesionerController::class, 'create'])->name('create');
     Route::post('/', [KuesionerController::class, 'store'])->name('store');
     Route::get('/{id}/edit', [KuesionerController::class, 'edit'])->name('edit');
