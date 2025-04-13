@@ -6,10 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $table = 'questions';
-
-    protected $fillable = [
-        'id_category',
-        'question_text',
-    ];
+    protected $fillable = ['kode', 'pertanyaan', 'kategori'];
 }

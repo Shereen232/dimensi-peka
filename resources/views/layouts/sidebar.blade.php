@@ -19,17 +19,17 @@
     </ul>
 
     <ul>
-      {{-- Questions --}}
+      {{-- kuesioner --}}
       <li class="relative px-6 py-3">
-        @if (Request::is('questions*'))
+        @if (Request::is('kuesioner*'))
         <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
         @endif
-        <a href="{{ url('/questions') }}"
-          class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 {{ Request::is('questions*') ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400' }} hover:text-gray-800 dark:hover:text-gray-200">
+        <a href="{{ url('/kuesioner') }}"
+          class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 {{ Request::is('kuesioner*') ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400' }} hover:text-gray-800 dark:hover:text-gray-200">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2"/>
           </svg>
-          <span class="ml-4">Questions</span>
+          <span class="ml-4">kuesioner</span>
         </a>
       </li>
 
@@ -74,29 +74,22 @@
         </ul>
       </li>
 
-      {{-- Test --}}
+      {{-- akun_saya --}}
       <li class="relative px-6 py-3">
-        @if (Request::is('test*'))
+        @if (Request::is('akun_saya*'))
         <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
         @endif
-        <a href="{{ url('/test') }}"
-          class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 {{ Request::is('test*') ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400' }} hover:text-gray-800 dark:hover:text-gray-200">
+        <a href="{{ url('/akun_saya') }}"
+          class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 {{ Request::is('akun_saya*') ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400' }} hover:text-gray-800 dark:hover:text-gray-200">
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
           </svg>
-          <span class="ml-4">Test</span>
+          <span class="ml-4">akun saya</span>
         </a>
       </li>
     </ul>
 
-    {{-- Create Account --}}
-    <div class="px-6 my-6">
-      <button
-        class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple">
-        Create account
-        <span class="ml-2" aria-hidden="true">+</span>
-      </button>
-    </div>
+   
   </div>
 </aside>
 
