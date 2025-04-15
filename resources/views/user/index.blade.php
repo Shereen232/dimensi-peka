@@ -22,7 +22,7 @@
                     <thead>
                         <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
                             <th class="px-4 py-3">no</th>
-                            <th class="px-4 py-3">Username</th>
+                            <th class="px-4 py-3">name</th>
                             <th class="px-4 py-3">Email</th>
                             <th class="px-4 py-3">Role</th>
                             <th class="px-4 py-3">Aksi</th>
@@ -32,7 +32,7 @@
                         @foreach($users as $index => $user)
                         <tr class="text-gray-700 dark:text-gray-400">
                             <td class="px-4 py-3 text-sm">{{ $index + 1 }}</td>
-                            <td class="px-4 py-3 text-sm">{{ $user->username }}</td>
+                            <td class="px-4 py-3 text-sm">{{ $user->name }}</td>
                             <td class="px-4 py-3 text-sm">{{ $user->email }}</td>
                             <td class="px-4 py-3 text-sm capitalize">{{ $user->role }}</td>
                             <td class="px-4 py-3 text-sm">

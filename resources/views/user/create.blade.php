@@ -7,8 +7,8 @@
     <form id="user-form" action="{{ route('user.store') }}" method="POST" class="bg-white p-6 rounded shadow-md">
         @csrf
         <div class="mb-4">
-            <label for="username" class="block font-medium">Username</label>
-            <input type="text" name="username" class="w-full border p-2 rounded" required>
+            <label for="name" class="block font-medium">name</label>
+            <input type="text" name="name" class="w-full border p-2 rounded" required>
         </div>
 
         <div class="mb-4">
@@ -24,8 +24,8 @@
         <div class="mb-4">
             <label for="role" class="block font-medium">Role</label>
             <select name="role" class="w-full border p-2 rounded" required>
-                <option value="Admin">Admin</option>
-                <option value="Pengguna">Pengguna</option>
+                <option value="admin">Admin</option>
+                <option value="responden">Responden</option>
             </select>
         </div>
 

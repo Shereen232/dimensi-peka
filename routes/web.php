@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KuesionerController; 
+use App\Http\Controllers\AkunController;
+use App\Http\Controllers\AuthController;
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,3 +30,12 @@ Route::prefix('kuesioner')->name('kuesioner.')->group(function () {
     Route::put('/{id}', [KuesionerController::class, 'update'])->name('update');
     Route::delete('/{id}', [KuesionerController::class, 'destroy'])->name('destroy');
 });
+
+Route::get('/akun', [AkunController::class, 'index'])->name('akun.index');
+
+
+
+
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -9,8 +9,8 @@
         @method('PUT')
 
         <div class="mb-4">
-            <label for="username" class="block font-medium">Username</label>
-            <input type="text" name="username" class="w-full border p-2 rounded" value="{{ $user->username }}" required>
+            <label for="name" class="block font-medium">name</label>
+            <input type="text" name="name" class="w-full border p-2 rounded" value="{{ $user->name }}" required>
         </div>
 
         <div class="mb-4">
