@@ -13,7 +13,7 @@ class User extends Authenticatable
     protected $table = 'users';
 
     // Primary key custom
-    protected $primaryKey = 'id_user';
+    protected $primaryKey = 'id';
 
     // Tipe primary key (default: int, kalau UUID ganti ke string)
     public $incrementing = true;

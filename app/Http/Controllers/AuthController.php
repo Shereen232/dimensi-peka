@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -14,22 +15,26 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $request->validate([
+        $credentials = $request->validate([
             'login' => 'required|string',
             'password' => 'required|string',
         ]);
-    
-        $login_type = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
-    
-        if (Auth::attempt([$login_type => $request->login, 'password' => $request->password])) {
+
+        $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+
+        if (Auth::attempt([$loginType => $request->login, 'password' => $request->password])) {
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard'); // Sesuaikan jika perlu
+            
+
+
+            return redirect()->intended(route('dashboard')); // arahkan ke dashboard
         }
-    
+        
         return back()->withErrors([
             'login' => 'Email atau Username dan password salah.',
         ]);
-    }    
+        
+    }
 
     public function logout(Request $request)
     {
