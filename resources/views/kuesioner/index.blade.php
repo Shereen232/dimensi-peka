@@ -2,14 +2,16 @@
 
 @section('content')
 <main class="h-full overflow-y-auto">
-  <div class="container mx-auto px-6 py-6">
+  <div class="container mx-auto px-6 py-8">
 
+    
+    <br>
     {{-- Judul --}}
-    <h2 class="text-2xl font-bold text-center text-gray-700 dark:text-gray-100 mb-8">
+    <h2 class="text-3xl font-bold text-center text-gray-800 dark:text-gray-100 mb-10">
       Kuesioner SDQ – Responden
     </h2>
-
-    {{-- Notifikasi jika ada --}}
+    <br>
+    {{-- Notifikasi --}}
     @if(session('success'))
       <div class="p-4 mb-6 text-sm text-green-700 bg-green-100 rounded-lg text-center">
         {{ session('success') }}
@@ -17,22 +19,28 @@
     @endif
 
     {{-- Form --}}
-    <form action="#" method="POST">
+    <form action="{{ route('kuesioner.store') }}" method="POST">
       @csrf
 
       <div class="grid grid-cols-1 gap-6">
         @foreach($questions as $index => $q)
-        <div class="p-5 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-800 shadow-sm">
-          <p class="mb-4 font-medium text-gray-800 dark:text-gray-100">
-            {{ $index + 1 }}. {{ $q->pertanyaan }}
-          </p> 
+        <div class="p-6 border rounded-lg shadow-sm bg-white dark:bg-gray-800 dark:border-gray-700">
+          <div class="flex items-start mb-4">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold text-sm">
+              {{ $index + 1 }}
+            </div>
+            <p class="ml-4 text-gray-800 dark:text-gray-100 font-medium">
+              {{ $q->pertanyaan }}
+            </p>
+          </div>
 
-          <div class="flex flex-col md:flex-row">
+          <div class="space-y-2 md:space-y-0 md:space-x-4 md:flex">
             @foreach ($options as $option)
               @if ($option->question_id == $q->id)
-              <label class="inline-flex items-center ml-2">
-                <input type="radio" name="answers{{ $q->id }}" value="{{$option->id}}" required class="form-radio text-purple-600 focus:ring-purple-500">
-                <span class="ml-4 text-gray-700 dark:text-gray-300">{{$option->text}}</span>
+              <label class="inline-flex items-center">
+                <input type="radio" name="answers{{ $q->id }}" value="{{ $option->id }}" required
+                  class="form-radio text-purple-600 focus:ring-purple-500">
+                <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">{{ $option->text }}</span>
               </label>
               @endif
             @endforeach
@@ -40,11 +48,12 @@
         </div>
         @endforeach
       </div>
-
-      {{-- Tombol Submit --}}
+      <br>
+      
+      {{-- Submit Button --}}
       <div class="mt-10 text-center">
         <button type="submit"
-          class="px-8 py-3 text-white bg-purple-600 hover:bg-purple-700 rounded-lg shadow font-medium">
+          class="px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-purple-400">
           Kirim Jawaban
         </button>
       </div>

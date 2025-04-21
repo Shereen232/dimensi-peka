@@ -9,14 +9,6 @@
       Hasil Kuesioner SDQ
     </h2>
 
-    {{-- Informasi Pengguna --}}
-    <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 mb-6 border border-gray-200 dark:border-gray-700">
-      <h5 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Informasi Pengguna</h5>
-      <p class="text-gray-700 dark:text-gray-300"><strong>Nama:</strong> Administrator</p>
-      <p class="text-gray-700 dark:text-gray-300"><strong>Usia:</strong> 22</p>
-      <p class="text-gray-700 dark:text-gray-300"><strong>Tanggal:</strong> {{ date('Y-m-d') }}</p>
-    </div>
-
     {{-- Tabel Hasil Kuesioner --}}
     <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 mb-6 border border-gray-200 dark:border-gray-700">
       <h5 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4 text-center">Tabel Kuisioner SDQ</h5>

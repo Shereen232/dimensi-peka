@@ -1,17 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KuesionerController; 
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AnalisisController;
+use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\GrafikController;
 
 // ✅ Group yang harus login dulu
 Route::middleware(['auth'])->group(function () {
     // Dashboard
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
     // User (admin)
     Route::prefix('user')->name('user.')->group(function () {
@@ -40,6 +43,15 @@ Route::middleware(['auth'])->group(function () {
     
 
 
+    Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
+
+
+
+    Route::get('/analisis/responden', [AnalisisController::class, 'responden'])->name('analisis.responden');
+    Route::get('/grafik', [GrafikController::class, 'index'])->name('grafik.index');
+
+
+
     // Logout
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
@@ -47,3 +59,7 @@ Route::middleware(['auth'])->group(function () {
 // ✅ Route yang bisa diakses tanpa login
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+
+Route::get('/', function () {
+    return view('landing');
+})->name('landing');
