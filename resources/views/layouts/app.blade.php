@@ -8,7 +8,7 @@
   <link href="{{ asset('assets/css/tailwind.output.css') }}" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
+  @stack('styles')
 </head>
 <body>
   <div class="flex h-screen bg-gray-50 dark:bg-gray-900" :class="{ 'overflow-hidden': isSideMenuOpen }">
@@ -26,7 +26,7 @@
       </main>
     </div>
   </div>
-
+  @stack('scripts')
   <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
   
 </body>

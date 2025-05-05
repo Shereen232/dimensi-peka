@@ -84,6 +84,13 @@ class KuesionerController extends Controller
         return redirect()->route('kuesioner.result')->with('success', 'Jawaban berhasil disimpan.');
     }
 
+    public function reset()
+    {
+        $userId = Auth::id();
+        Answer::where('user_id', $userId)->delete();
+
+        return redirect()->route('kuesioner.index')->with('success', 'Silakan isi ulang kuesioner.');
+    }
     // Tampilkan hasil kuisioner
     public function show()
     {

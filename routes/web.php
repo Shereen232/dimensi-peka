@@ -32,6 +32,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/result', [KuesionerController::class, 'show'])->name('result');
         Route::get('/create', [KuesionerController::class, 'create'])->name('create');
         Route::post('/', [KuesionerController::class, 'store'])->name('store');
+        Route::post('/reset', [KuesionerController::class, 'reset'])->name('reset');
         Route::get('/{id}/edit', [KuesionerController::class, 'edit'])->name('edit');
         Route::put('/{id}', [KuesionerController::class, 'update'])->name('update');
         Route::delete('/{id}', [KuesionerController::class, 'destroy'])->name('destroy');

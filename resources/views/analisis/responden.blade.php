@@ -22,38 +22,10 @@ function statusText($score) {
       Biodata & Hasil Kuesioner Responden
     </h2>
 
-    <form method="GET" action="{{ url()->current() }}" class="mb-4 flex flex-col md:flex-row items-center gap-4">
-        <div>
-          <label class="block text-sm mb-1 text-gray-600 dark:text-gray-300">Sekolah</label>
-          <select name="sekolah" class="form-select w-full px-3 py-2 rounded border border-gray-300 dark:bg-gray-700 dark:text-white">
-            <option value="">Semua</option>
-            @foreach($sekolahList as $s)
-              <option value="{{ $s }}" {{ request('sekolah') == $s ? 'selected' : '' }}>{{ $s }}</option>
-            @endforeach
-          </select>
-        </div>
-      
-        <div>
-          <label class="block text-sm mb-1 text-gray-600 dark:text-gray-300">Kelas</label>
-          <select name="kelas" class="form-select w-full px-3 py-2 rounded border border-gray-300 dark:bg-gray-700 dark:text-white">
-            <option value="">Semua</option>
-            @foreach($kelasList as $k)
-              <option value="{{ $k }}" {{ request('kelas') == $k ? 'selected' : '' }}>{{ $k }}</option>
-            @endforeach
-          </select>
-        </div>
-      
-        <div class="pt-6">
-          <button type="submit"
-            class="px-4 py-2 text-sm font-medium text-white bg-purple-600 rounded hover:bg-purple-700">
-            Filter
-          </button>
-        </div>
-      </form>
-      
-    <div class="w-full overflow-hidden rounded-lg shadow-xs">
+    <br>
+    <br>
       <div class="w-full overflow-x-auto">
-        <table class="w-full whitespace-no-wrap">
+        <table id="hasilTable" class="display w-full whitespace-no-wrap">
           <thead>
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
               <th class="px-4 py-3">No</th>
@@ -101,4 +73,38 @@ function statusText($score) {
     </div>
   </div>
 </main>
+
+@push('styles')
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+@endpush
+
+@push('scripts')
+<!-- jQuery & DataTables JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $('#hasilTable').DataTable({
+      responsive: true,
+      pageLength: 10,
+      language: {
+        search: "Cari:",
+        lengthMenu: "Tampilkan _MENU_ data per halaman",
+        zeroRecords: "Data tidak ditemukan",
+        info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+        infoEmpty: "Tidak ada data",
+        paginate: {
+          first: "Pertama",
+          last: "Terakhir",
+          next: "Berikutnya",
+          previous: "Sebelumnya"
+        }
+      }
+    });
+  });
+</script>
+@endpush
+
 @endsection

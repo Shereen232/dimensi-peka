@@ -121,8 +121,21 @@
       </div>
       @endforeach
     </div>
-
-    <a href="{{ route('kuesioner.index') }}" class="btn btn-secondary mt-3">Kembali</a>
+    <div class="flex justify-center gap-4 mt-6">
+      <a href="{{ route('kuesioner.index') }}" 
+         class="px-6 py-2 text-sm text-white bg-purple-600 rounded-lg hover:bg-purple-700">
+        Kembali
+      </a>
+    
+      <form method="POST" action="{{ route('kuesioner.reset') }}">
+        @csrf
+        <button type="submit" onclick="return confirm('Yakin ingin mengisi ulang kuesioner?')"
+          class="px-6 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-700">
+          Isi Ulang
+        </button>
+      </form>
+    </div>
+    
 
   </div>
 </main>
