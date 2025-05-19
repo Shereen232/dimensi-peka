@@ -121,7 +121,7 @@
       </div>
       @endforeach
     </div>
-    <div class="flex justify-center gap-4 mt-6">
+   <div class="flex justify-center gap-4 mt-6">
       <a href="{{ route('kuesioner.index') }}" 
          class="px-6 py-2 text-sm text-white bg-purple-600 rounded-lg hover:bg-purple-700">
         Kembali

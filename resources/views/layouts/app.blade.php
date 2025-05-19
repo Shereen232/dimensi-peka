@@ -28,6 +28,17 @@
   </div>
   @stack('scripts')
   <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
+  @if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: "{{ session('success') }}",
+            timer: 3000,
+            showConfirmButton: false
+        });
+    </script>
+  @endif
   
 </body>
 </html>
