@@ -23,9 +23,13 @@ class User extends Authenticatable
     public $timestamps = false; // karena kamu pakai created_at saja (tanpa updated_at)
 
     protected $fillable = [
-        'name',
+       'name',
         'email',
         'password',
+        'umur',
+        'alamat',
+        'kelas',
+        'sekolah',
         'role',
         'created_at',
         'login_at',

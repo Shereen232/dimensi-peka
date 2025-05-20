@@ -12,7 +12,11 @@ class RiwayatController extends Controller
     // Tampilkan semua riwayat milik responden yang login
     public function index()
     {
-        $riwayat = Riwayat::with('user')->latest()->get();
+        $userId = Auth::id(); // Ambil ID user dari session login
+        $riwayat = Riwayat::where('user_id', $userId)
+                        ->orderBy('tanggal', 'desc')
+                        ->get();
+
         return view('riwayat.index', compact('riwayat'));
     }
 }
