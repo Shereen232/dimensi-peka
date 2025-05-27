@@ -8,6 +8,8 @@
   <link rel="stylesheet" href="{{ asset('assets/css/tailwind.output.css') }}" />
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
   <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@stack('scripts')  
 </head>
 <body>
   <div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
@@ -81,5 +83,21 @@
       </div>
     </div>
   </div>
+
+  @stack('scripts')
+  <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
+  @if(session('success'))
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: "{{ session('success') }}",
+            timer: 3000,
+            showConfirmButton: false
+        });
+    </script>
+  @endif
+  
+
 </body>
 </html>

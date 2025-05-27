@@ -62,7 +62,7 @@ class AuthController extends Controller
             'kelas'    => 'nullable|string|max:50',
             'sekolah'  => 'nullable|string|max:255',
         ]);
-
+         try {
         // Simpan data user baru sebagai role "responden"
         User::create([
             'name'     => $request->name,
@@ -75,6 +75,9 @@ class AuthController extends Controller
             'role'     => 'responden',
         ]);
 
-        return redirect('/login')->with('success', 'Akun berhasil dibuat. Silakan login.');
+        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat registrasi.')->withInput();
+        }
     }
 }

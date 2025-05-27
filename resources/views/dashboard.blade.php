@@ -1,4 +1,6 @@
 @extends('layouts.app')
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 
 @section('title', 'Dashboard')
 
@@ -74,110 +76,114 @@
   </div>
   @endif
   <!-- DASHBOARD UNTUK RESPONDEN -->
-  @if(auth()->user()->role === 'responden')
-<div class="px-6 py-8">
-  <!-- Carousel Gambar -->
-<div x-data="{ activeSlide: 0, slides: [
-  { image: '/images/dimensi1.jpg', alt: 'Apa itu Dimensi Peka?' },
-  { image: '/images/dimensi2.jpg', alt: 'Tujuan Pengisian Kuesioner' },
-  { image: '/images/dimensi3.jpg', alt: 'Manfaat Analisis Hasil' }
-] }" class="relative w-full max-w-5xl mx-auto mb-10 rounded-lg overflow-hidden shadow-lg">
+@if(auth()->user()->role === 'responden')
+    {{-- ===== Carousel Alpine.js ===== --}}
+    <div x-data="carousel" x-init="init()" class="relative w-full max-w-5xl mx-auto mb-10 rounded-lg overflow-hidden shadow-lg">
+      {{-- slides --}}
+      <div class="relative h-64 md:h-80">
+        <template x-for="(slide, index) in slides" :key="index">
+          <div x-show="activeSlide === index"
+               x-transition:enter="transition ease-out duration-500"
+               x-transition:enter-start="opacity-0 scale-95"
+               x-transition:enter-end="opacity-100 scale-100"
+               class="absolute inset-0">
+            <img :src="slide.image" :alt="slide.alt" class="w-full h-full object-cover" />
+            <div class="absolute bottom-0 left-0 bg-black bg-opacity-50 text-white p-4 text-sm">
+              <span x-text="slide.alt"></span>
+            </div>
+          </div>
+        </template>
+      </div>
+      {{-- bullets --}}
+      <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2">
+        <template x-for="(slide, index) in slides" :key="index">
+          <button @click="activeSlide = index"
+                  :class="activeSlide === index ? 'bg-white' : 'bg-gray-400'"
+                  class="w-3 h-3 rounded-full"></button>
+        </template>
+      </div>
+    </div>
 
-  <!-- Slides -->
-  <div class="relative h-64 md:h-80">
-    <template x-for="(slide, index) in slides" :key="index">
-      <div x-show="activeSlide === index" x-transition:enter="transition ease-out duration-500"
-           x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-           class="absolute inset-0">
-        <img :src="slide.image" :alt="slide.alt" class="w-full h-full object-cover" />
-        <div class="absolute bottom-0 left-0 bg-black bg-opacity-50 text-white p-4 text-sm">
-          <span x-text="slide.alt"></span>
+    {{-- ===== Sambutan & Kartu Informasi ===== --}}
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">
+      Selamat Datang di Dimensi Peka 👋
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      {{-- Kartu 1 --}}
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-[1.02] transition">
+        <div class="flex items-start space-x-4">
+          <div class="p-3 bg-blue-100 text-blue-700 rounded-full">
+            <i class="fas fa-info-circle text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Apa itu Dimensi Peka?</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
+              Alat untuk memahami keseimbangan emosional dan sosial remaja melalui lima aspek psikologis.
+            </p>
+          </div>
         </div>
       </div>
-    </template>
-  </div>
 
-  <!-- Bullets -->
-  <div class="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
-    <template x-for="(slide, index) in slides" :key="index">
-      <button @click="activeSlide = index"
-        :class="activeSlide === index ? 'bg-white' : 'bg-gray-400'"
-        class="w-3 h-3 rounded-full"></button>
-    </template>
-  </div>
-
-  <!-- Auto Slide -->
-  <script>
-    document.addEventListener('alpine:init', () => {
-      Alpine.data('carousel', () => ({
-        activeSlide: 0,
-        slides: [],
-        init() {
-          setInterval(() => {
-            this.activeSlide = (this.activeSlide + 1) % this.slides.length;
-          }, 5000);
-        }
-      }))
-    })
-  </script>
-</div>
-
-  <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Selamat Datang di Dimensi Peka 👋</h2>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-    <!-- Kartu: Apa itu Dimensi Peka -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-[1.02] transition">
-      <div class="flex items-start space-x-4">
-        <div class="p-3 bg-blue-100 text-blue-700 rounded-full">
-          <i class="fas fa-info-circle text-xl"></i>
+      {{-- Kartu 2 --}}
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-[1.02] transition">
+        <div class="flex items-start space-x-4">
+          <div class="p-3 bg-purple-100 text-purple-700 rounded-full">
+            <i class="fas fa-bullseye text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Tujuan Pengisian</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
+              Mendeteksi kekuatan dan kesulitan kamu agar bisa mendapat bimbingan yang tepat.
+            </p>
+          </div>
         </div>
-        <div>
-          <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Apa itu Dimensi Peka?</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
-            Alat untuk memahami keseimbangan emosional dan sosial remaja melalui lima aspek psikologis.
-          </p>
+      </div>
+
+      {{-- Kartu 3 --}}
+      <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-[1.02] transition">
+        <div class="flex items-start space-x-4">
+          <div class="p-3 bg-green-100 text-green-700 rounded-full">
+            <i class="fas fa-check-circle text-xl"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Apa yang Bisa Saya Lakukan?</h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
+              Setelah mengisi kuesioner, kamu bisa melihat hasil dan berdiskusi dengan guru, orang tua, atau konselor.
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Kartu: Tujuan Pengisian -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-[1.02] transition">
-      <div class="flex items-start space-x-4">
-        <div class="p-3 bg-purple-100 text-purple-700 rounded-full">
-          <i class="fas fa-bullseye text-xl"></i>
-        </div>
-        <div>
-          <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Tujuan Pengisian</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
-            Mendeteksi kekuatan dan kesulitan kamu agar bisa mendapat bimbingan yang tepat.
-          </p>
-        </div>
-      </div>
+    {{-- CTA --}}
+    <div class="mt-8 text-center">
+      <a href="{{ route('kuesioner.index') }}"
+         class="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-black rounded-xl shadow hover:bg-blue-700 transition">
+        <i class="bg-white-600 hover:bg-white-700 text-black font-semibold py-2 px-4 rounded shadow-md transition "></i> Isi Kuesioner Sekarang
+      </a>
     </div>
-
-    <!-- Kartu: Apa yang Bisa Saya Lakukan -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 hover:scale-[1.02] transition">
-      <div class="flex items-start space-x-4">
-        <div class="p-3 bg-green-100 text-green-700 rounded-full">
-          <i class="fas fa-check-circle text-xl"></i>
-        </div>
-        <div>
-          <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Apa yang Bisa Saya Lakukan?</h3>
-          <p class="text-sm text-gray-600 dark:text-gray-300 mt-1">
-            Setelah mengisi kuesioner, kamu bisa melihat hasil dan berdiskusi dengan guru, orang tua, atau konselor.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Tombol CTA -->
-  <div class="mt-8 text-center">
-    <a href="{{ route('kuesioner.index') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl shadow hover:bg-indigo-700 transition">
-      <i class="fas fa-lightbulb"></i> Isi Kuesioner Sekarang
-    </a>
-  </div>
-</div>
-@endif
-
+  @endif
 @endsection
+
+{{-- ========== Alpine Component for Carousel ========== --}}
+@push('scripts')
+<script>
+  document.addEventListener('alpine:init', () => {
+    Alpine.data('carousel', () => ({
+      activeSlide: 0,
+      slides: [
+        { image: '/images/dimensi1.png', alt: 'Apa itu Dimensi Peka?' },
+        { image: '/images/dimensi2.png', alt: 'Tujuan Pengisian Kuesioner' },
+        { image: '/images/dimensi3.png', alt: 'Manfaat Analisis Hasil' }
+      ],
+      init() {
+        // Auto slide
+        setInterval(() => {
+          this.activeSlide = (this.activeSlide + 1) % this.slides.length;
+        }, 5000);
+      }
+    }))
+  })
+</script>
+@endpush
