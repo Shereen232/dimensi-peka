@@ -3,81 +3,75 @@
 @section('content')
 <main class="h-full overflow-y-auto">
   <div class="container mx-auto px-6 py-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      {{-- DATA ANAK --}}
+      <div class="bg-white dark:bg-gray-800 rounded shadow p-6 border border-gray-200 dark:border-gray-700">
+        <h3 class="text-lg font-bold text-purple-700 mb-4">📌 Data Anak</h3>
+        <ul class="text-gray-700 dark:text-gray-300 text-sm space-y-2">
+          <li><strong>ID Anak:</strong> {{ $user->id }}</li>
+          <li><strong>Nama:</strong> {{ $user->name }}</li>
+          <li><strong>Jenis Kelamin:</strong> {{ $user->jenis_kelamin ?? '-' }}</li>
+          <li><strong>Umur:</strong> {{ $user->umur }} tahun</li>
+          <li><strong>Skrining pada:</strong> {{ $riwayat->tanggal }}</li>
+        </ul>
+      </div>
 
-    {{-- Judul --}}
-    <h2 class="text-2xl font-bold text-center text-gray-700 dark:text-gray-100 mb-8">
-      Hasil Kuesioner SDQ
-    </h2>
+      {{-- HASIL SKRINING --}}
+      <div class="bg-white dark:bg-gray-800 rounded shadow p-6 border border-gray-200 dark:border-gray-700">
+        <h3 class="text-lg font-bold text-purple-700 mb-4">📄 Hasil Skrining Mental Emosional</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-4">
+          Sesuai teori Strength and Difficulties Questionnaire, terdapat dua sub skala kesehatan mental emosional anak yaitu <strong>Kekuatan dan Kesulitan Anak</strong>. Berikut hasil skrining dan interpretasinya.
+        </p>
 
-    {{-- Tabel Hasil Kuesioner --}}
-    <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 mb-6 border border-gray-200 dark:border-gray-700">
-      <h5 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4 text-center">Tabel Kuisioner SDQ</h5>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {{-- Tabel Per Kategori --}}
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm text-left">
-            <thead class="bg-gray-100 dark:bg-gray-700">
-              <tr>
-                <th class="px-4 py-2 text-gray-700 dark:text-gray-200 font-semibold">Kategori</th>
-                <th class="px-4 py-2 text-gray-700 dark:text-gray-200 font-semibold">Skor</th>
-                <th class="px-4 py-2 text-gray-700 dark:text-gray-200 font-semibold">Type</th>
-                <th class="px-4 py-2 text-gray-700 dark:text-gray-200 font-semibold">Result</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-gray-700 dark:text-gray-300">
-              <tr>
-                <td class="px-4 py-2">Emotional Symptoms (ES)</td>
-                <td class="px-4 py-2"><strong id="E"></strong></td>
-                <td class="px-4 py-2">Gangguan</td>
-                <td class="px-4 py-2" id="E-result"></td>
-              </tr>
-              <tr>
-                <td class="px-4 py-2">Conduct Problems (CP)</td>
-                <td class="px-4 py-2"><strong id="C"></strong></td>
-                <td class="px-4 py-2">Gangguan</td>
-                <td class="px-4 py-2" id="C-result"></td>
-              </tr>
-              <tr>
-                <td class="px-4 py-2">Hyperactivity (H)</td>
-                <td class="px-4 py-2"><strong id="H"></strong></td>
-                <td class="px-4 py-2">Gangguan</td>
-                <td class="px-4 py-2" id="H-result"></td>
-              </tr>
-              <tr>
-                <td class="px-4 py-2">Peer Problems (P)</td>
-                <td class="px-4 py-2"><strong id="P"></strong></td>
-                <td class="px-4 py-2">Gangguan</td>
-                <td class="px-4 py-2" id="P-result"></td>
-              </tr>
-              <tr>
-                <td class="px-4 py-2">Prosocial Behavior (Pro)</td>
-                <td class="px-4 py-2"><strong id="Pro"></strong></td>
-                <td class="px-4 py-2">Skor Total Kekuatan</td>
-                <td class="px-4 py-2" id="Pro-result"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {{-- Total Kesulitan --}}
+        <table class="min-w-full text-sm mb-6">
+          <tr>
+            <td class="font-semibold w-1/3">Total Kesulitan Anak</td>
+            <td>: {{ $riwayat->hasil_total }}</td>
+          </tr>
+          <tr>
+            <td class="font-semibold">Keterangan</td>
+            <td>: <span id="Total-ket"></span></td>
+          </tr>
+          <tr>
+            <td class="font-semibold">Rekomendasi</td>
+            <td>: <span id="Total-rekom"></span></td>
+          </tr>
+        </table>
 
-        {{-- Tabel Skor Total Kesulitan --}}
-        <div class="overflow-x-auto">
-          <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-sm text-left">
-            <thead class="bg-gray-100 dark:bg-gray-700">
-              <tr>
-                <th class="px-4 py-2 text-gray-700 dark:text-gray-200 font-semibold">Skor Total Kesulitan</th>
-                <th class="px-4 py-2 text-gray-700 dark:text-gray-200 font-semibold">Result</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 dark:divide-gray-700 text-gray-700 dark:text-gray-300">
-              <tr>
-                <td class="px-4 py-2" id="total-score"></td>
-                <td class="px-4 py-2" id="total-result"></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        {{-- Detail Per Kategori --}}
+        <h4 class="text-md font-semibold text-gray-700 dark:text-gray-200 mb-2">Detail Kesulitan Anak:</h4>
+
+    @php
+      $map = ['E' => 'es', 'C' => 'cp', 'H' => 'h', 'P' => 'p', 'Pro' => 'pro'];
+    @endphp
+
+    @foreach (['E' => 'Gejala Emosional', 'C' => 'Masalah Perilaku', 'H' => 'Hiperaktivitas', 'P' => 'Masalah Teman Sebaya', 'Pro' => 'Perilaku Prososial'] as $kode => $label)
+    @php
+      $kolom = 'hasil_' . $map[$kode];
+    @endphp
+    <table class="min-w-full text-sm mb-6">
+      <tr class="text-purple-700 font-semibold">
+        <td class="w-1/3">{{ $label }} ({{ $kode }})</td>
+        <td>: {{ $riwayat->$kolom }}</td>
+      </tr>
+      <tr>
+        <td class="font-semibold">Keterangan</td>
+        <td>: <span id="{{ $kode }}-ket"></span></td>
+      </tr>
+      <tr>
+        <td class="font-semibold">Rekomendasi</td>
+        <td>: <span id="{{ $kode }}-rekom"></span></td>
+      </tr>
+    </table>
+    @endforeach
+
       </div>
     </div>
+  </div>
+</main>
+
 
     {{-- Perhitungan Skor --}}
     @php
@@ -90,37 +84,7 @@
         ];
     @endphp
 
-    {{-- Rekapan Jawaban --}}
-    <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg p-6 mb-6 border border-gray-200 dark:border-gray-700">
-      <h5 class="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">Rekapan Jawaban</h5>
-      @foreach($questions as $index => $q)
-      <div class="mb-4">
-        <p class="mb-4 font-medium text-gray-800 dark:text-gray-100">
-          {{ $index + 1 }}. {{ $q->pertanyaan }}
-        </p> 
-
-        <div class="flex flex-col md:flex-row">
-          @foreach ($options as $option)
-            @if ($option->question_id == $q->id)
-            <label class="inline-flex items-center ml-2">
-              <input type="radio" name="answers{{ $q->id }}" value="{{$option->id}}" class="form-radio text-purple-600 focus:ring-purple-500"
-              @php
-                  if($option->id == $answers[$q->id]){
-                    echo 'checked';
-                    if (isset($score[$q->kategori])) {
-                        $score[$q->kategori] += $option->score;
-                    }
-                  }
-              @endphp disabled>
-              <span class="ml-4 text-gray-700 dark:text-gray-300">{{$option->text}}</span>
-            </label>
-            @endif
-          @endforeach
-        </div>
-        <b>Score: {{ \App\Models\Option::find($answers[$q->id])->score }}</b>
-      </div>
-      @endforeach
-    </div>
+    
    <div class="flex justify-center gap-4 mt-6">
       <a href="{{ route('kuesioner.index') }}" 
          class="px-6 py-2 text-sm text-white bg-purple-600 rounded-lg hover:bg-purple-700">
@@ -145,45 +109,167 @@
   const score = @json($score);
 
   function getResult(category, value) {
-    switch (category) {
-      case 'E':
-        return value <= 5 ? 'NORMAL' : (value >= 7 ? 'ABNORMAL' : 'BORDERLINE');
-      case 'C':
-        return value <= 3 ? 'NORMAL' : (value >= 10 ? 'ABNORMAL' : 'BORDERLINE');
-      case 'H':
-        return value <= 5 ? 'NORMAL' : (value >= 7 ? 'ABNORMAL' : 'BORDERLINE');
-      case 'P':
-        return value <= 3 ? 'NORMAL' : (value >= 6 ? 'ABNORMAL' : 'BORDERLINE');
-      case 'Pro':
-        return value >= 6 ? 'NORMAL' : (value <= 4 ? 'ABNORMAL' : 'BORDERLINE');
-      case 'Total':
-        return value <= 15 ? 'NORMAL' : (value >= 20 ? 'ABNORMAL' : 'BORDERLINE');
-      default:
-        return '-';
+    if (category === 'E') {
+      if (value <= 5) return 'NORMAL';
+      if (value >= 7) return 'ABNORMAL';
+      return 'BORDERLINE';
     }
+    if (category === 'C') {
+      if (value <= 3) return 'NORMAL';
+      if (value >= 10) return 'ABNORMAL';
+      return 'BORDERLINE';
+    }
+    if (category === 'H') {
+      if (value <= 5) return 'NORMAL';
+      if (value >= 7) return 'ABNORMAL';
+      return 'BORDERLINE';
+    }
+    if (category === 'P') {
+      if (value <= 3) return 'NORMAL';
+      if (value >= 6) return 'ABNORMAL';
+      return 'BORDERLINE';
+    }
+    if (category === 'Pro') {
+      if (value >= 6) return 'NORMAL';
+      if (value <= 4) return 'ABNORMAL';
+      return 'BORDERLINE';
+    }
+    if (category === 'Total') {
+      if (value <= 15) return 'NORMAL';
+      if (value >= 20) return 'ABNORMAL';
+      return 'BORDERLINE';
+    }
+    return '-';
+  }
+
+  function getExplanation(category, status) {
+    const penjelasan = {
+      Total: {
+        NORMAL: {
+          ket: 'Normal pada total kesulitan berarti anak belajar dengan baik, tidak memiliki gangguan yang berarti, baik berasal dari faktor internal anak maupun eksternalnya.',
+          rekom: '-',
+        },
+        BORDERLINE: {
+          ket: 'Terdapat beberapa tanda potensi masalah psikososial, meskipun belum tergolong sebagai gangguan yang pasti.',
+          rekom: 'Lakukan skrining ulang dalam 3–6 bulan. Bila ada perubahan signifikan, konsultasikan ke psikolog anak atau psikiater.',
+        },
+        ABNORMAL: {
+          ket: 'Ada indikasi kuat masalah psikososial yang membutuhkan perhatian lebih lanjut.',
+          rekom: 'Segera konsultasi dengan psikolog anak atau psikiater.',
+        },
+      },
+      E: {
+        NORMAL: {
+          ket: 'Anak mampu mengendalikan perasaan dan pikirannya secara emosional.',
+          rekom: '-',
+        },
+        BORDERLINE: {
+          ket: 'Terdapat tanda awal kesulitan emosional, seperti cemas, sedih, atau takut berlebihan.',
+          rekom: 'Perhatikan perubahan suasana hati, mudah menangis, sulit tidur, atau menghindari aktivitas sosial.',
+        },
+        ABNORMAL: {
+          ket: 'Mengalami kesulitan emosional yang signifikan seperti cemas berlebihan, sering merasa sedih atau takut.',
+          rekom: 'Segera konsultasikan dengan psikolog anak atau psikiater.',
+        },
+      },
+      C: {
+        NORMAL: {
+          ket: 'Tidak ada tanda-tanda perilaku bermasalah yang signifikan.',
+          rekom: '-',
+        },
+        BORDERLINE: {
+          ket: 'Indikasi awal kesulitan perilaku seperti mudah marah atau membangkang.',
+          rekom: 'Observasi lebih lanjut terhadap perilaku di rumah dan sekolah.',
+        },
+        ABNORMAL: {
+          ket: 'Menunjukkan perilaku bermasalah signifikan seperti agresif, kasar, atau suka mencuri.',
+          rekom: 'Segera konsultasikan dengan psikolog anak.',
+        },
+      },
+      H: {
+        NORMAL: {
+          ket: 'Tidak menunjukkan gangguan perhatian atau hiperaktivitas yang berarti.',
+          rekom: '-',
+        },
+        BORDERLINE: {
+          ket: 'Tanda-tanda gangguan perhatian atau impulsivitas mulai terlihat.',
+          rekom: 'Perlu pemantauan lebih lanjut.',
+        },
+        ABNORMAL: {
+          ket: 'Mengalami gangguan perhatian dan hiperaktivitas yang nyata.',
+          rekom: 'Segera konsultasikan dengan psikolog atau psikiater.',
+        },
+      },
+      P: {
+        NORMAL: {
+          ket: 'Relasi sosial anak tergolong baik.',
+          rekom: '-',
+        },
+        BORDERLINE: {
+          ket: 'Mulai terlihat kesulitan dalam hubungan sosial.',
+          rekom: 'Dorong anak untuk aktif di kegiatan sosial.',
+        },
+        ABNORMAL: {
+          ket: 'Kesulitan sosial yang signifikan.',
+          rekom: 'Konsultasikan dengan psikolog atau konselor sekolah.',
+        },
+      },
+      Pro: {
+        NORMAL: {
+          ket: 'Kemampuan sosial anak baik.',
+          rekom: '-',
+        },
+        BORDERLINE: {
+          ket: 'Kemungkinan keterbatasan empati atau kerja sama.',
+          rekom: 'Berikan teladan dan bimbingan sosial secara langsung.',
+        },
+        ABNORMAL: {
+          ket: 'Kurangnya kepedulian terhadap orang lain.',
+          rekom: 'Segera konsultasikan dengan psikolog atau konselor sekolah.',
+        },
+      },
+    };
+
+    return penjelasan[category]?.[status] || { ket: '-', rekom: '-' };
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    // Tampilkan skor
-    document.querySelector('#Pro').textContent = score.Pro;
-    document.querySelector('#E').textContent = score.E;
-    document.querySelector('#C').textContent = score.C;
-    document.querySelector('#H').textContent = score.H;
-    document.querySelector('#P').textContent = score.P;
-
-    // Tampilkan hasil berdasarkan kategori
-    document.querySelector('#E-result').textContent = getResult('E', score.E);
-    document.querySelector('#C-result').textContent = getResult('C', score.C);
-    document.querySelector('#H-result').textContent = getResult('H', score.H);
-    document.querySelector('#P-result').textContent = getResult('P', score.P);
-    document.querySelector('#Pro-result').textContent = getResult('Pro', score.Pro);
-
-    // Total kesulitan = E + C + H + P
     const total = score.E + score.C + score.H + score.P;
-    document.querySelector('#total-score').textContent = total;
-    document.querySelector('#total-result').textContent = getResult('Total', total);
+
+    const resultMap = {
+      Pro: score.Pro,
+      E: score.E,
+      C: score.C,
+      H: score.H,
+      P: score.P,
+      Total: total,
+    };
+
+    for (const kategori in resultMap) {
+      const val = resultMap[kategori];
+      const status = getResult(kategori, val);
+      const { ket, rekom } = getExplanation(kategori, status);
+
+      // Tampilkan skor dan hasil
+      const skorEl = document.querySelector(`#${kategori}`);
+      const hasilEl = document.querySelector(`#${kategori}-result`);
+      const ketEl = document.querySelector(`#${kategori}-ket`);
+      const rekomEl = document.querySelector(`#${kategori}-rekom`);
+
+      if (skorEl) skorEl.textContent = val;
+      if (hasilEl) hasilEl.textContent = status;
+      if (ketEl) ketEl.textContent = ket;
+      if (rekomEl) rekomEl.textContent = rekom;
+    }
+
+    // Total
+    const totalEl = document.querySelector('#total-score');
+    const totalResEl = document.querySelector('#total-result');
+    if (totalEl) totalEl.textContent = total;
+    if (totalResEl) totalResEl.textContent = getResult('Total', total);
   });
 </script>
+
 
 
 @endsection

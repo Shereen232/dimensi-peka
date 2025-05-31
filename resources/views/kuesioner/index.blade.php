@@ -19,7 +19,7 @@
     @endif
 
     {{-- Form --}}
-    <form action="{{ route('kuesioner.store') }}" method="POST">
+    <form id="form-quiz" method="POST">
       @csrf
 
       <div class="grid grid-cols-1 gap-6">
@@ -61,4 +61,50 @@
 
   </div>
 </main>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+  $(document).ready(function() {
+    $('#form-quiz').submit(function(event) {
+      event.preventDefault();
+      var formData = new FormData(this);
+      var url = "{{ route('kuesioner.store') }}";
+
+      Swal.fire({
+        title: "Kirim Kuisioner?",
+        text: "Haraop periksa kembali sebelum mengirim!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Kirim!"
+      }).then((result) => {
+        if (result.isConfirmed) kirim(url, formData);
+      });
+    });
+  });
+
+  function kirim(url, data)
+  {
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        processData: false,
+        contentType: false,
+        success: function(data) {
+          Swal.fire({
+            title: "Berhasil!",
+            text: "Terimakasih, jawaban anda telah kami rekam.",
+            icon: "success"
+          });
+          console.log(data);
+          window.location.reload();
+        },
+        error: function(xhr, status, error) {
+          console.log(xhr.responseText);
+        }
+      });
+  }
+</script>
 @endsection

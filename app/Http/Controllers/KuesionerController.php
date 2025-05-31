@@ -94,13 +94,30 @@ class KuesionerController extends Controller
     // Tampilkan hasil kuisioner
     public function show()
     {
-        $userId = Auth::id();
-        $questions = Question::all();
-        $options = Option::all();
-        $answers = Answer::where('user_id', $userId)->pluck('option_id', 'question_id')->toArray();
+    $userId = Auth::id();
 
-        return view('kuesioner.result', compact('questions', 'options', 'answers'));
+        // Ambil user
+        $user = \App\Models\User::findOrFail($userId);
+
+        // Ambil riwayat terakhir user
+        $riwayat = \App\Models\Riwayat::where('user_id', $userId)->latest()->first();
+
+        if (!$riwayat) {
+            return redirect()->route('kuesioner.index')->with('error', 'Belum ada hasil kuesioner.');
+        }
+
+        // Skor untuk JS
+        $score = [
+            'E'    => $riwayat->skor_es,
+            'C'    => $riwayat->skor_cp,
+            'H'    => $riwayat->skor_h,
+            'P'    => $riwayat->skor_p,
+            'Pro'  => $riwayat->skor_pro,
+        ];
+
+        return view('kuesioner.result', compact('user', 'riwayat', 'score'));
     }
+
 
     // Fungsi bantu klasifikasi skor
     private function klasifikasi($skor, $range, $texts)

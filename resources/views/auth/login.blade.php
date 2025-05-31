@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="{{ asset('assets/css/tailwind.output.css') }}" />
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
   <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
   <div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
@@ -35,7 +36,7 @@
                 <span class="text-gray-700 dark:text-gray-400">Email atau Username</span>
                 <input name="login" type="text" required
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input"
-                  placeholder="Email atau Username" />
+                  placeholder="Email atau Username" autocomplete='off' />
               </label>              
 
               <label class="block mt-4 text-sm">
@@ -68,3 +69,17 @@
   </div>
 </body>
 </html>
+@stack('scripts')
+  <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
+  @if(session('success'))
+    <script>
+        Swal.fire({
+          icon: 'success',
+          title: 'Berhasil!',
+          text: "{{ session('success') }}",
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1500
+        });
+    </script>
+  @endif

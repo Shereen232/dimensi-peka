@@ -28,7 +28,7 @@ class AuthController extends Controller
             
 
 
-            return redirect()->intended(route('dashboard')); // arahkan ke dashboard
+            return redirect()->intended(route('dashboard'))->with('success', 'Berhasil Login!');; // arahkan ke dashboard
         }
         
         return back()->withErrors([
@@ -42,7 +42,7 @@ class AuthController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/login');
+        return redirect('/login')->with('success', 'Logout berhasil!');
     }
 
      public function showRegister()
