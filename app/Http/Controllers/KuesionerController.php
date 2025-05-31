@@ -61,23 +61,24 @@ class KuesionerController extends Controller
         $riwayat->tanggal = Carbon::now()->toDateString();
 
         $riwayat->skor_es = $score['E'];
-        $riwayat->hasil_es = $this->klasifikasi($score['E'], [5, 6], ['NORMAL', 'BORDERLINE', 'ABNORMAL']);
+        $riwayat->hasil_es = $this->klasifikasi('E', $score['E']);
 
         $riwayat->skor_cp = $score['C'];
-        $riwayat->hasil_cp = $this->klasifikasi($score['C'], [3, 9], ['NORMAL', 'BORDERLINE', 'ABNORMAL']);
+        $riwayat->hasil_cp = $this->klasifikasi('C', $score['C']);
 
         $riwayat->skor_h = $score['H'];
-        $riwayat->hasil_h = $this->klasifikasi($score['H'], [5, 6], ['NORMAL', 'BORDERLINE', 'ABNORMAL']);
+        $riwayat->hasil_h = $this->klasifikasi('H', $score['H']);
 
         $riwayat->skor_p = $score['P'];
-        $riwayat->hasil_p = $this->klasifikasi($score['P'], [3, 5], ['NORMAL', 'BORDERLINE', 'ABNORMAL']);
+        $riwayat->hasil_p = $this->klasifikasi('P', $score['P']);
 
         $riwayat->skor_pro = $score['Pro'];
-        $riwayat->hasil_pro = $this->klasifikasi($score['Pro'], [4, 5], ['ABNORMAL', 'BORDERLINE', 'NORMAL']);
+        $riwayat->hasil_pro = $this->klasifikasi('Pro', $score['Pro']);
 
         $total = $score['E'] + $score['C'] + $score['H'] + $score['P'];
         $riwayat->total_kesulitan = $total;
-        $riwayat->hasil_total = $this->klasifikasi($total, [15, 19], ['NORMAL', 'BORDERLINE', 'ABNORMAL']);
+        $riwayat->hasil_total = $this->klasifikasi('Total', $total);
+
 
         $riwayat->save();
 
@@ -113,6 +114,8 @@ class KuesionerController extends Controller
             'H'    => $riwayat->skor_h,
             'P'    => $riwayat->skor_p,
             'Pro'  => $riwayat->skor_pro,
+            'Total' => $riwayat->total_kesulitan,
+            
         ];
 
         return view('kuesioner.result', compact('user', 'riwayat', 'score'));
@@ -120,10 +123,24 @@ class KuesionerController extends Controller
 
 
     // Fungsi bantu klasifikasi skor
-    private function klasifikasi($skor, $range, $texts)
+    private function klasifikasi($kategori, $skor)
     {
-        if ($skor <= $range[0]) return $texts[0];
-        elseif ($skor <= $range[1]) return $texts[1];
-        else return $texts[2];
+        switch ($kategori) {
+            case 'E':
+                return $skor <= 5 ? 'NORMAL' : ($skor >= 7 ? 'ABNORMAL' : 'BORDERLINE');
+            case 'C':
+                return $skor <= 3 ? 'NORMAL' : ($skor >= 10 ? 'ABNORMAL' : 'BORDERLINE');
+            case 'H':
+                return $skor <= 5 ? 'NORMAL' : ($skor >= 7 ? 'ABNORMAL' : 'BORDERLINE');
+            case 'P':
+                return $skor <= 3 ? 'NORMAL' : ($skor >= 6 ? 'ABNORMAL' : 'BORDERLINE');
+            case 'Pro':
+                return $skor >= 6 ? 'NORMAL' : ($skor <= 4 ? 'ABNORMAL' : 'BORDERLINE');
+            case 'Total':
+                return $skor <= 15 ? 'NORMAL' : ($skor >= 20 ? 'ABNORMAL' : 'BORDERLINE');
+            default:
+                return '-';
+        }
     }
+
 }

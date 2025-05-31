@@ -109,38 +109,14 @@
   const score = @json($score);
 
   function getResult(category, value) {
-    if (category === 'E') {
-      if (value <= 5) return 'NORMAL';
-      if (value >= 7) return 'ABNORMAL';
-      return 'BORDERLINE';
-    }
-    if (category === 'C') {
-      if (value <= 3) return 'NORMAL';
-      if (value >= 10) return 'ABNORMAL';
-      return 'BORDERLINE';
-    }
-    if (category === 'H') {
-      if (value <= 5) return 'NORMAL';
-      if (value >= 7) return 'ABNORMAL';
-      return 'BORDERLINE';
-    }
-    if (category === 'P') {
-      if (value <= 3) return 'NORMAL';
-      if (value >= 6) return 'ABNORMAL';
-      return 'BORDERLINE';
-    }
-    if (category === 'Pro') {
-      if (value >= 6) return 'NORMAL';
-      if (value <= 4) return 'ABNORMAL';
-      return 'BORDERLINE';
-    }
-    if (category === 'Total') {
-      if (value <= 15) return 'NORMAL';
-      if (value >= 20) return 'ABNORMAL';
-      return 'BORDERLINE';
-    }
-    return '-';
-  }
+  if (category === 'E') return value <= 5 ? 'NORMAL' : value >= 7 ? 'ABNORMAL' : 'BORDERLINE';
+  if (category === 'C') return value <= 3 ? 'NORMAL' : value >= 10 ? 'ABNORMAL' : 'BORDERLINE';
+  if (category === 'H') return value <= 5 ? 'NORMAL' : value >= 7 ? 'ABNORMAL' : 'BORDERLINE';
+  if (category === 'P') return value <= 3 ? 'NORMAL' : value >= 6 ? 'ABNORMAL' : 'BORDERLINE';
+  if (category === 'Pro') return value >= 6 ? 'NORMAL' : value <= 4 ? 'ABNORMAL' : 'BORDERLINE';
+  if (category === 'Total') return value <= 15 ? 'NORMAL' : value >= 20 ? 'ABNORMAL' : 'BORDERLINE';
+  return '-';
+}
 
   function getExplanation(category, status) {
     const penjelasan = {
@@ -234,40 +210,43 @@
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    const total = score.E + score.C + score.H + score.P;
+  const resultMap = {
+    E: score.es,
+    C: score.cp,
+    H: score.h,
+    P: score.p,
+    Pro: score.pro,
+    Total: score.es + score.cp + score.h + score.p,
+  };
 
-    const resultMap = {
-      Pro: score.Pro,
-      E: score.E,
-      C: score.C,
-      H: score.H,
-      P: score.P,
-      Total: total,
-    };
+  for (const kategori in score) {
+  const totalScore = score.es + score.cp + score.h + score.p;
+  const totalStatus = getResult('Total', totalScore);
+  const { ket: totalKet, rekom: totalRekom } = getExplanation('Total', totalStatus);
 
-    for (const kategori in resultMap) {
-      const val = resultMap[kategori];
-      const status = getResult(kategori, val);
-      const { ket, rekom } = getExplanation(kategori, status);
+  const totalKetEl = document.querySelector('#Total-ket');
+  const totalRekomEl = document.querySelector('#Total-rekom');
 
-      // Tampilkan skor dan hasil
-      const skorEl = document.querySelector(`#${kategori}`);
-      const hasilEl = document.querySelector(`#${kategori}-result`);
-      const ketEl = document.querySelector(`#${kategori}-ket`);
-      const rekomEl = document.querySelector(`#${kategori}-rekom`);
+  if (totalKetEl) totalKetEl.textContent = totalKet;
+  if (totalRekomEl) totalRekomEl.textContent = totalRekom;
 
-      if (skorEl) skorEl.textContent = val;
-      if (hasilEl) hasilEl.textContent = status;
-      if (ketEl) ketEl.textContent = ket;
-      if (rekomEl) rekomEl.textContent = rekom;
-    }
+  const val = score[kategori];
+  const status = getResult(kategori, val);
+  const { ket, rekom } = getExplanation(kategori, status);
 
-    // Total
-    const totalEl = document.querySelector('#total-score');
-    const totalResEl = document.querySelector('#total-result');
-    if (totalEl) totalEl.textContent = total;
-    if (totalResEl) totalResEl.textContent = getResult('Total', total);
-  });
+  const skorEl   = document.querySelector(`#${kategori}`);
+  const hasilEl  = document.querySelector(`#${kategori}-result`);
+  const ketEl    = document.querySelector(`#${kategori}-ket`);
+  const rekomEl  = document.querySelector(`#${kategori}-rekom`);
+
+  if (skorEl) skorEl.textContent = val;
+  if (hasilEl) hasilEl.textContent = status;
+  if (ketEl) ketEl.textContent = ket;
+  if (rekomEl) rekomEl.textContent = rekom;
+}
+
+});
+
 </script>
 
 
