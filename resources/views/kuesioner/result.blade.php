@@ -72,18 +72,6 @@
   </div>
 </main>
 
-
-    {{-- Perhitungan Skor --}}
-    @php
-        $score = [
-          'Pro' => 0,
-          'E' => 0,
-          'C' => 0,
-          'H' => 0,
-          'P' => 0,
-        ];
-    @endphp
-
     
    <div class="flex justify-center gap-4 mt-6">
       <a href="{{ route('kuesioner.index') }}" 
@@ -211,12 +199,12 @@
 
   document.addEventListener('DOMContentLoaded', function () {
   const resultMap = {
-    E: score.es,
-    C: score.cp,
-    H: score.h,
-    P: score.p,
-    Pro: score.pro,
-    Total: score.es + score.cp + score.h + score.p,
+    E: score.skor_es,
+    C: score.skor_cp,
+    H: score.skor_h,
+    P: score.skor_p,
+    Pro: score.skor_pro,
+    Total: score.skor_es + score.skor_cp + score.skor_h + score.skor_p,
   };
 
   for (const kategori in score) {

@@ -115,7 +115,6 @@ class KuesionerController extends Controller
             'P'    => $riwayat->skor_p,
             'Pro'  => $riwayat->skor_pro,
             'Total' => $riwayat->total_kesulitan,
-            
         ];
 
         return view('kuesioner.result', compact('user', 'riwayat', 'score'));
