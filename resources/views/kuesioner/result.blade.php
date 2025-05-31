@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<main class="h-full overflow-y-auto">
-  <div class="container mx-auto px-6 py-6">
+<main class="h-full overflow-y-auto px-6 py-8">
+  <div class="container mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
       
       {{-- DATA ANAK --}}
@@ -70,26 +70,32 @@
       </div>
     </div>
   </div>
-</main>
 
     
-   <div class="flex justify-center gap-4 mt-6">
-      <a href="{{ route('kuesioner.index') }}" 
-         class="px-6 py-2 text-sm text-white bg-purple-600 rounded-lg hover:bg-purple-700">
+   <div class="flex justify-center flex-wrap gap-4 mt-6">
+      <!-- Tombol Kembali -->
+      <a href="{{ route('kuesioner.index') }}"
+        class="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 transition">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+        </svg>
         Kembali
       </a>
-    
+
+      <!-- Tombol Isi Ulang -->
       <form method="POST" action="{{ route('kuesioner.reset') }}">
         @csrf
         <button type="submit" onclick="return confirm('Yakin ingin mengisi ulang kuesioner?')"
-          class="px-6 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-700">
+          class="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-red-600 rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 transition">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5l15 15M19.5 4.5l-15 15"></path>
+          </svg>
           Isi Ulang
         </button>
       </form>
     </div>
-    
-
-  </div>
 </main>
 
 {{-- Kirim data skor ke JS --}}
