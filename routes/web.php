@@ -29,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
     // Kuesioner (admin & responden)
     Route::prefix('kuesioner')->name('kuesioner.')->group(function () {
         Route::get('/', [KuesionerController::class, 'index'])->name('index');
-        Route::get('/result', [KuesionerController::class, 'show'])->name('result');
+        Route::get('/result/{id}', [KuesionerController::class, 'show'])->name('result');
         Route::get('/create', [KuesionerController::class, 'create'])->name('create');
         Route::post('/', [KuesionerController::class, 'store'])->name('store');
         Route::post('/reset', [KuesionerController::class, 'reset'])->name('reset');

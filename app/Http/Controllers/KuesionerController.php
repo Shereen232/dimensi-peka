@@ -19,9 +19,6 @@ class KuesionerController extends Controller
         $questions = Question::all();
         $options = Option::all();
 
-        $answer = Answer::where('user_id', $userId)->first();
-        if ($answer) return redirect()->route('kuesioner.result');
-
         return view('kuesioner.index', compact('questions', 'options'));
     }
 
@@ -82,7 +79,11 @@ class KuesionerController extends Controller
 
         $riwayat->save();
 
-        return redirect()->route('kuesioner.result')->with('success', 'Jawaban berhasil disimpan.');
+        return response()->json([
+            'success' => true,
+            'redirect' => route('kuesioner.result', $riwayat->id),
+            'message' => 'Jawaban berhasil disimpan.'
+        ]);
     }
 
     public function reset()
@@ -93,7 +94,7 @@ class KuesionerController extends Controller
         return redirect()->route('kuesioner.index')->with('success', 'Silakan isi ulang kuesioner.');
     }
     // Tampilkan hasil kuisioner
-    public function show()
+    public function show($id)
     {
     $userId = Auth::id();
 
@@ -101,7 +102,7 @@ class KuesionerController extends Controller
         $user = \App\Models\User::findOrFail($userId);
 
         // Ambil riwayat terakhir user
-        $riwayat = \App\Models\Riwayat::where('user_id', $userId)->latest()->first();
+        $riwayat = \App\Models\Riwayat::where('id', $id)->where('user_id', $userId)->latest()->first();
 
         if (!$riwayat) {
             return redirect()->route('kuesioner.index')->with('error', 'Belum ada hasil kuesioner.');

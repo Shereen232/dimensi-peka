@@ -211,11 +211,10 @@
         success: function(data) {
           Swal.fire({
             title: "Berhasil!",
-            text: "Terimakasih, jawaban anda telah kami rekam.",
+            text: data.message,
             icon: "success"
           });
-          console.log(data);
-          window.location.reload();
+          window.location.href = data.redirect;
         },
         error: function(xhr, status, error) {
           console.log(xhr.responseText);
