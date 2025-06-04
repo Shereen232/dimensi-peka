@@ -9,22 +9,50 @@
         @method('PUT')
 
         <div class="mb-4">
-            <label for="name" class="block font-medium">name</label>
+            <label class="block font-medium">Nama</label>
             <input type="text" name="name" class="w-full border p-2 rounded" value="{{ $user->name }}" required>
         </div>
 
         <div class="mb-4">
-            <label for="email" class="block font-medium">Email</label>
+            <label class="block font-medium">Email</label>
             <input type="email" name="email" class="w-full border p-2 rounded" value="{{ $user->email }}" required>
         </div>
 
         <div class="mb-4">
-            <label for="password" class="block font-medium">Password (Biarkan kosong jika tidak diubah)</label>
+            <label class="block font-medium">Password (biarkan kosong jika tidak diubah)</label>
             <input type="password" name="password" class="w-full border p-2 rounded">
         </div>
 
         <div class="mb-4">
-            <label for="role" class="block font-medium">Role</label>
+            <label class="block font-medium">Jenis Kelamin</label>
+            <select name="jenis_kelamin" class="w-full border p-2 rounded">
+                <option value="L" {{ $user->jenis_kelamin == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                <option value="P" {{ $user->jenis_kelamin == 'P' ? 'selected' : '' }}>Perempuan</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="block font-medium">Umur</label>
+            <input type="number" name="umur" class="w-full border p-2 rounded" value="{{ $user->umur }}">
+        </div>
+
+        <div class="mb-4">
+            <label class="block font-medium">Alamat</label>
+                <textarea name="alamat" rows="2" class="w-full border p-2 rounded">{{ $user->alamat }}</textarea>
+            </div>
+
+        <div class="mb-4">
+            <label class="block font-medium">Kelas</label>
+            <input type="text" name="kelas" class="w-full border p-2 rounded" value="{{ $user->kelas }}">
+        </div>
+
+        <div class="mb-4">
+            <label class="block font-medium">Sekolah</label>
+            <input type="text" name="sekolah" class="w-full border p-2 rounded" value="{{ $user->sekolah }}">
+        </div>
+
+        <div class="mb-4">
+            <label class="block font-medium">Role</label>
             <select name="role" class="w-full border p-2 rounded" required>
                 <option value="Admin" {{ $user->role == 'Admin' ? 'selected' : '' }}>Admin</option>
                 <option value="Pengguna" {{ $user->role == 'Pengguna' ? 'selected' : '' }}>Pengguna</option>
@@ -35,6 +63,7 @@
             Update
         </button>
     </form>
+
 </div>
 
 <script>

@@ -27,6 +27,7 @@ class User extends Authenticatable
         'email',
         'password',
         'umur',
+        'jenis_kelamin',
         'alamat',
         'kelas',
         'sekolah',

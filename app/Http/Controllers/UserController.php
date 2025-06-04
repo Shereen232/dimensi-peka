@@ -49,15 +49,25 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|string|max:50',
-            'email'    => 'required|email|max:100|unique:users,email,' . $id . ',id',
-            'role'     => 'required|string',
+            'name'           => 'required|string|max:50',
+            'email'          => 'required|email|max:100|unique:users,email,' . $id,
+            'role'           => 'required|string',
+            'jenis_kelamin'  => 'nullable|in:L,P',
+            'umur'           => 'nullable|integer|min:0',
+            'alamat'         => 'nullable|string|max:255',
+            'kelas'          => 'nullable|string|max:50',
+            'sekolah'        => 'nullable|string|max:100',
         ]);
 
         $data = [
-            'name' => $request->name,
-            'email'    => $request->email,
-            'role'     => $request->role,
+            'name'           => $request->name,
+            'email'          => $request->email,
+            'role'           => $request->role,
+            'jenis_kelamin'  => $request->jenis_kelamin,
+            'umur'           => $request->umur,
+            'alamat'         => $request->alamat,
+            'kelas'          => $request->kelas,
+            'sekolah'        => $request->sekolah,
         ];
 
         if ($request->filled('password')) {

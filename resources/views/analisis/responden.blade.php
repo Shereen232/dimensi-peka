@@ -86,6 +86,12 @@ function statusText($score) {
 
 <script>
   $(document).ready(function () {
+    // Cek apakah DataTable sudah ada, jika iya, hancurkan dulu
+    if ($.fn.DataTable.isDataTable('#hasilTable')) {
+      $('#hasilTable').DataTable().destroy();
+    }
+
+    // Baru inisialisasi ulang
     $('#hasilTable').DataTable({
       responsive: true,
       pageLength: 10,
@@ -105,6 +111,7 @@ function statusText($score) {
     });
   });
 </script>
+
 @endpush
 
 @endsection

@@ -53,6 +53,15 @@
               </label>
 
               <label class="block text-sm mb-3">
+                <span class="text-gray-700 dark:text-gray-400">Jenis Kelamin</span>
+                <select name="jenis_kelamin" required class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-select">
+                  <option value="" disabled selected>Pilih jenis kelamin</option>
+                  <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>L (Laki-laki)</option>
+                  <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>P (Perempuan)</option>
+                </select>
+              </label>
+
+              <label class="block text-sm mb-3">
                 <span class="text-gray-700 dark:text-gray-400">Alamat</span>
                 <textarea name="alamat" rows="2" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-textarea">{{ old('alamat') }}</textarea>
               </label>
