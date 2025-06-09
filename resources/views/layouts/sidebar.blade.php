@@ -64,35 +64,67 @@
         </li>
 
         {{-- Data Analysis --}}
-        <li class="relative px-6 py-3" x-data="{ open: {{ Request::is('/analisis/responden*') || Request::is('grafik*') ? 'true' : 'false' }} }">
+        <li class="relative px-6 py-3">
+          @if (Request::is('/analisis/responden*'))
+            <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
+          @endif
+          <a href="{{ route('analisis.responden') }}"
+            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 {{ Request::is('/analisis/responden*') ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400' }} hover:text-gray-800 dark:hover:text-gray-200">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/>
+              <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>
+            </svg>
+            <span class="ml-4">Data Responden</span>
+          </a>
+        </li>
+
+        <li class="relative px-6 py-3" x-data="{ open: {{ Request::is('grafik*') ? 'true' : 'false' }} }">
           <button @click="open = !open"
-            class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 {{ Request::is('/analisis/responden*') || Request::is('grafik*') ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400' }} hover:text-gray-800 dark:hover:text-gray-200">
+            class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 {{ Request::is('grafik*') ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400' }} hover:text-gray-800 dark:hover:text-gray-200">
             <span class="inline-flex items-center">
               <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/>
                 <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>
               </svg>
-              <span class="ml-4">Data Analysis</span>
+              <span class="ml-4">Data Grafik</span>
             </span>
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
             </svg>
           </button>
-          <ul x-show="open" x-transition
-            class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
-            aria-label="submenu">
-            <li>
-              <a class="block px-2 py-1 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('/analisis/responden*') ? 'text-gray-800 dark:text-gray-100' : '' }}" href="{{ url('/analisis/responden') }}">
-                Biodata & Hasil Kuesioner
-              </a>
-            </li>
-            <li>
-              <a class="block px-2 py-1 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('grafik*') ? 'text-gray-800 dark:text-gray-100' : '' }}" href="{{ url('/grafik') }}">
-                Rekap Grafik / Statistik
-              </a>
-            </li>
-          </ul>
-        </li>
+        <ul x-show="open" x-transition
+          class="p-2 mt-2 space-y-2 overflow-hidden text-sm font-medium text-gray-500 rounded-md shadow-inner bg-gray-50 dark:text-gray-400 dark:bg-gray-900"
+          aria-label="submenu">
+          <li>
+            <a class="block px-2 py-1 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('grafik/wilayah*') ? 'text-gray-800 dark:text-gray-100' : '' }}"
+              href="{{ url('/grafik/wilayah') }}">
+              Data Wilayah
+            </a>
+          </li>
+
+          <li>
+            <a class="block px-2 py-1 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('grafik/jenis-kelamin*') ? 'text-gray-800 dark:text-gray-100' : '' }}"
+              href="{{ url('/grafik/jenis-kelamin') }}">
+              Data Jenis Kelamin
+            </a>
+          </li>
+
+          <li>
+            <a class="block px-2 py-1 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('grafik/kategori*') ? 'text-gray-800 dark:text-gray-100' : '' }}"
+              href="{{ url('/grafik/kategori') }}">
+              Data Kategori
+            </a>
+          </li>
+
+          <li>
+            <a class="block px-2 py-1 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('grafik/kondisi*') ? 'text-gray-800 dark:text-gray-100' : '' }}"
+              href="{{ url('/grafik/kondisi') }}">
+              Data Kondisi
+            </a>
+          </li>
+        </ul>
+      </li>
+
       @endif
 
       {{-- Akun Saya - Semua role --}}

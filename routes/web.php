@@ -50,6 +50,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/analisis/responden', [AnalisisController::class, 'responden'])->name('analisis.responden');
     Route::get('/grafik', [GrafikController::class, 'index'])->name('grafik.index');
+    Route::get('/grafik/wilayah', [GrafikController::class, 'wilayah'])->name('grafik.wilayah');
+
 
 
 

@@ -14,8 +14,91 @@
           <li><strong>Jenis Kelamin:</strong> {{ $user->jenis_kelamin ?? '-' }}</li>
           <li><strong>Umur:</strong> {{ $user->umur }} tahun</li>
           <li><strong>Skrining pada:</strong> {{ $riwayat->tanggal }}</li>
-        </ul>
-      </div>
+          <li class="pt-4">
+          <p class="font-semibold text-sm text-gray-800 dark:text-gray-300 mb-2">Basis Pengetahuan Penilaian Hasil Skrining</p>
+
+          {{-- 1. Skor Total Kesulitan --}}
+          <p class="mb-1 text-xs font-semibold">1. Skor Total Kesulitan</p>
+          <table class="table-auto border border-gray-300 mb-4 text-xs">
+            <thead class="bg-gray-100 dark:bg-gray-700">
+              <tr>
+                <th class="border px-3 py-1">Skor</th>
+                <th class="border px-3 py-1">Kategori</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="border px-3 py-1">0 – 15</td><td class="border px-3 py-1">Normal</td></tr>
+              <tr><td class="border px-3 py-1">16 – 19</td><td class="border px-3 py-1">Borderline</td></tr>
+              <tr><td class="border px-3 py-1">20 – 40</td><td class="border px-3 py-1">Abnormal</td></tr>
+            </tbody>
+          </table>
+
+          {{-- 2. Skor Gejala Emosional (E) --}}
+          <p class="mb-1 text-xs font-semibold">2. Skor Gejala Emosional (E)</p>
+          <table class="table-auto border border-gray-300 mb-4 text-xs">
+            <thead class="bg-gray-100 dark:bg-gray-700">
+              <tr><th class="border px-3 py-1">Skor</th><th class="border px-3 py-1">Kategori</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="border px-3 py-1">0 – 5</td><td class="border px-3 py-1">Normal</td></tr>
+              <tr><td class="border px-3 py-1">6</td><td class="border px-3 py-1">Borderline</td></tr>
+              <tr><td class="border px-3 py-1">7 – 10</td><td class="border px-3 py-1">Abnormal</td></tr>
+            </tbody>
+          </table>
+
+          {{-- 3. Skor Masalah Perilaku (C) --}}
+          <p class="mb-1 text-xs font-semibold">3. Skor Masalah Perilaku (C)</p>
+          <table class="table-auto border border-gray-300 mb-4 text-xs">
+            <thead class="bg-gray-100 dark:bg-gray-700">
+              <tr><th class="border px-3 py-1">Skor</th><th class="border px-3 py-1">Kategori</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="border px-3 py-1">0 – 3</td><td class="border px-3 py-1">Normal</td></tr>
+              <tr><td class="border px-3 py-1">4 – 9</td><td class="border px-3 py-1">Borderline</td></tr>
+              <tr><td class="border px-3 py-1">10 – 10+</td><td class="border px-3 py-1">Abnormal</td></tr>
+            </tbody>
+          </table>
+
+          {{-- 4. Skor Hiperaktivitas (H) --}}
+          <p class="mb-1 text-xs font-semibold">4. Skor Hiperaktivitas (H)</p>
+          <table class="table-auto border border-gray-300 mb-4 text-xs">
+            <thead class="bg-gray-100 dark:bg-gray-700">
+              <tr><th class="border px-3 py-1">Skor</th><th class="border px-3 py-1">Kategori</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="border px-3 py-1">0 – 5</td><td class="border px-3 py-1">Normal</td></tr>
+              <tr><td class="border px-3 py-1">6</td><td class="border px-3 py-1">Borderline</td></tr>
+              <tr><td class="border px-3 py-1">7 – 10+</td><td class="border px-3 py-1">Abnormal</td></tr>
+            </tbody>
+          </table>
+
+          {{-- 5. Skor Masalah Teman Sebaya (P) --}}
+          <p class="mb-1 text-xs font-semibold">5. Skor Masalah Teman Sebaya (P)</p>
+          <table class="table-auto border border-gray-300 mb-4 text-xs">
+            <thead class="bg-gray-100 dark:bg-gray-700">
+              <tr><th class="border px-3 py-1">Skor</th><th class="border px-3 py-1">Kategori</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="border px-3 py-1">0 – 3</td><td class="border px-3 py-1">Normal</td></tr>
+              <tr><td class="border px-3 py-1">4 – 5</td><td class="border px-3 py-1">Borderline</td></tr>
+              <tr><td class="border px-3 py-1">6 – 10+</td><td class="border px-3 py-1">Abnormal</td></tr>
+            </tbody>
+          </table>
+
+          {{-- 6. Skor Perilaku Prososial (Pro) --}}
+          <p class="mb-1 text-xs font-semibold">6. Skor Perilaku Prososial (Pro)</p>
+          <table class="table-auto border border-gray-300 text-xs">
+            <thead class="bg-gray-100 dark:bg-gray-700">
+              <tr><th class="border px-3 py-1">Skor</th><th class="border px-3 py-1">Kategori</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="border px-3 py-1">0 – 4</td><td class="border px-3 py-1">Abnormal</td></tr>
+              <tr><td class="border px-3 py-1">5</td><td class="border px-3 py-1">Borderline</td></tr>
+              <tr><td class="border px-3 py-1">6 – 10</td><td class="border px-3 py-1">Normal</td></tr>
+            </tbody>
+          </table>
+        </li>
+</div>
 
       {{-- HASIL SKRINING --}}
       <div class="bg-white dark:bg-gray-800 rounded shadow p-6 border border-gray-200 dark:border-gray-700">
@@ -28,7 +111,8 @@
         <table class="min-w-full text-sm mb-6">
           <tr>
             <td class="font-semibold w-1/3">Total Kesulitan Anak</td>
-            <td>: {{ $riwayat->hasil_total }}</td>
+            <td>: {{ $riwayat->hasil_total }} (Skor: {{ $riwayat->total_kesulitan }})</td>
+
           </tr>
           <tr>
             <td class="font-semibold">Keterangan</td>
@@ -54,7 +138,7 @@
     <table class="min-w-full text-sm mb-6">
       <tr class="text-purple-700 font-semibold">
         <td class="w-1/3">{{ $label }} ({{ $kode }})</td>
-        <td>: {{ $riwayat->$kolom }}</td>
+        <td>: {{ $riwayat->$kolom }}(Skor: {{ $score[$kode] ?? '-' }})</td>
       </tr>
       <tr>
         <td class="font-semibold">Keterangan</td>

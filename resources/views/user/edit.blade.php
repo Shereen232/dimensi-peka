@@ -54,8 +54,8 @@
         <div class="mb-4">
             <label class="block font-medium">Role</label>
             <select name="role" class="w-full border p-2 rounded" required>
-                <option value="Admin" {{ $user->role == 'Admin' ? 'selected' : '' }}>Admin</option>
-                <option value="Pengguna" {{ $user->role == 'Pengguna' ? 'selected' : '' }}>Pengguna</option>
+                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>Admin</option>
+                <option value="responden" {{ $user->role == 'responden' ? 'selected' : '' }}>responden</option>
             </select>
         </div>
 
