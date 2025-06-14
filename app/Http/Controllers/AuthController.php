@@ -51,35 +51,39 @@ class AuthController extends Controller
     }
 
 
-     public function register(Request $request)
+   public function register(Request $request)
     {
         $request->validate([
-            'name'     => 'required|string|max:255',
-            'email'    => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
-            'umur'     => 'nullable|integer',
+            'name'          => 'required|string|max:255',
+            'email'         => 'required|email|unique:users,email',
+            'password'      => 'required|min:6',
+            'umur'          => 'nullable|integer',
             'jenis_kelamin' => 'required',
-            'alamat'   => 'nullable|string|max:255',
-            'kelas'    => 'nullable|string|max:50',
-            'sekolah'  => 'nullable|string|max:255',
-        ]);
-         try {
-        // Simpan data user baru sebagai role "responden"
-        User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
-            'umur'     => $request->umur,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'alamat'   => $request->alamat,
-            'kelas'    => $request->kelas,
-            'sekolah'  => $request->sekolah,
-            'role'     => 'responden',
+            'alamat'        => 'nullable|string|max:255',
+            'kelurahan'     => 'required|string|max:100',
+            'kelas'         => 'nullable|string|max:50',
+            'sekolah'       => 'nullable|string|max:255',
         ]);
 
-        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
+        try {
+            // Simpan data user baru sebagai role "responden"
+            User::create([
+                'name'          => $request->name,
+                'email'         => $request->email,
+                'password'      => Hash::make($request->password),
+                'umur'          => $request->umur,
+                'jenis_kelamin' => $request->jenis_kelamin,
+                'alamat'        => $request->alamat,
+                'kelurahan'     => $request->kelurahan,
+                'kelas'         => $request->kelas,
+                'sekolah'       => $request->sekolah,
+                'role'          => 'responden',
+            ]);
+
+            return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Terjadi kesalahan saat registrasi.')->withInput();
         }
     }
+
 }

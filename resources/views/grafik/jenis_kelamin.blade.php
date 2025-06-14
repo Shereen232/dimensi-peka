@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Statistik Responden per Kelurahan</h2>
+<div class="container mx-auto px-4 py-8">
+  <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Statistik Responden per Jenis Kelamin</h2>
 
-  {{-- Filter Kondisi --}}
+  {{-- Filter --}}
   <form method="GET" class="flex flex-col md:flex-row justify-end items-center mb-6 gap-3">
     <div>
       <select name="kondisi" class="border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring focus:border-blue-300">
@@ -24,23 +24,23 @@
     </span>
   </div>
 
-  {{-- Card per Wilayah --}}
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-10">
-    @foreach($wilayah as $w)
-    <div class="bg-white rounded-xl shadow-sm p-5 hover:shadow-lg transition duration-300">
-      <p class="text-blue-600 font-bold text-center text-xl">{{ $w->total }} Orang</p>
-<p class="text-center text-gray-600 mt-2 text-sm tracking-wide">
-  Jenis Kelamin: <span class="font-medium text-gray-800">{{ $w->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</span>
-</p>
-
+  {{-- Card per Jenis Kelamin --}}
+ <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+  @foreach($jenisKelamin as $item)
+    <div class="bg-white rounded-xl shadow-sm p-5 hover:shadow-md transition duration-300">
+      <p class="text-blue-600 font-bold text-center text-xl">{{ $item->total }} Orang</p>
+      <p class="text-gray-500 text-center text-sm mt-2">
+        {{ $item->jenis_kelamin === 'L' ? 'Laki-laki' : ($item->jenis_kelamin === 'P' ? 'Perempuan' : 'Tidak Diketahui') }}
+      </p>
     </div>
-    @endforeach
-  </div>
+  @endforeach
+</div>
+
 
   {{-- Grafik --}}
-  <div class="max-w-xl mx-auto">
-    <div class="bg-white p-3 rounded-xl shadow-md">
-      <canvas id="wilayahChart" width="400" height="400"></canvas>
+  <div class="max-w-2xl mx-auto">
+    <div class="bg-white p-6 rounded-xl shadow-md">
+      <canvas id="genderChart" width="400" height="400"></canvas>
     </div>
   </div>
 </div>
@@ -50,19 +50,15 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const ctx = document.getElementById('wilayahChart');
+    const ctx = document.getElementById('genderChart');
 
     if (ctx) {
       const data = {
-        labels: {!! json_encode($wilayah->pluck('kelurahan')) !!},
+        labels: {!! json_encode($jenisKelamin->pluck('jenis_kelamin')) !!},
         datasets: [{
-          label: 'Jumlah Responden per Kelurahan',
-          data: {!! json_encode($wilayah->pluck('total')) !!},
-          backgroundColor: [
-            '#60a5fa', '#34d399', '#fbbf24', '#f87171', '#a78bfa',
-            '#fb923c', '#4ade80', '#38bdf8', '#c084fc', '#f472b6',
-            '#10b981', '#facc15', '#818cf8', '#f97316'
-          ],
+          label: 'Jumlah Responden per Jenis Kelamin',
+          data: {!! json_encode($jenisKelamin->pluck('total')) !!},
+          backgroundColor: ['#60a5fa', '#f87171'],
           hoverOffset: 6
         }]
       };
@@ -73,12 +69,7 @@
         options: {
           plugins: {
             legend: {
-              position: 'bottom',
-              labels: {
-                font: {
-                  size: 12
-                }
-              }
+              position: 'bottom'
             }
           }
         }

@@ -28,6 +28,7 @@ class User extends Authenticatable
         'password',
         'umur',
         'jenis_kelamin',
+        'kelurahan',
         'alamat',
         'kelas',
         'sekolah',
@@ -39,4 +40,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
     ];
+
+    public function riwayat()
+    {
+        return $this->hasMany(Riwayat::class);
+    }
+
 }

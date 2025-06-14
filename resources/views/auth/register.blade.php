@@ -9,7 +9,12 @@
   <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
   <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-@stack('scripts')  
+
+  <!-- Tom Select -->
+  <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+
+  @stack('scripts')  
 </head>
 <body>
   <div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
@@ -61,8 +66,30 @@
                 </select>
               </label>
 
+               <label class="block text-sm mb-3">
+                <span class="text-gray-700 dark:text-gray-400">Kelurahan</span>
+                <select id="kelurahan" name="kelurahan" placeholder="Pilih kelurahan..." required
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-select">
+                  <option value="" disabled selected>Pilih kelurahan</option>
+                  <option value="Bendan">Bendan</option>
+                  <option value="Kramatsati">Kramatsati</option>
+                  <option value="Tirto">Tirto</option>
+                  <option value="Medono">Medono</option>
+                  <option value="Sokorejo">Sokorejo</option>
+                  <option value="Noyontaan">Noyontaan</option>
+                  <option value="Tondano">Tondano</option>
+                  <option value="Klego">Klego</option>
+                  <option value="Pekalongan Selatan">Pekalongan Selatan</option>
+                  <option value="Jenggot">Jenggot</option>
+                  <option value="Buaran">Buaran</option>
+                  <option value="Kusuma Bangsa">Kusuma Bangsa</option>
+                  <option value="Krapyak Kidul">Krapyak Kidul</option>
+                  <option value="Dukuh">Dukuh</option>
+                </select>
+              </label>
+
               <label class="block text-sm mb-3">
-                <span class="text-gray-700 dark:text-gray-400">Alamat</span>
+                <span class="text-gray-700 dark:text-gray-400">Alamat Lengkap</span>
                 <textarea name="alamat" rows="2" class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-textarea">{{ old('alamat') }}</textarea>
               </label>
 
@@ -95,6 +122,7 @@
 
   @stack('scripts')
   <script src="{{ asset('assets/js/init-alpine.js') }}"></script>
+
   @if(session('success'))
     <script>
         Swal.fire({
@@ -106,7 +134,16 @@
         });
     </script>
   @endif
-  
 
+  <!-- Inisialisasi Tom Select -->
+  <script>
+    new TomSelect("#kelurahan", {
+      create: false,
+      sortField: {
+        field: "text",
+        direction: "asc"
+      }
+    });
+  </script>
 </body>
 </html>
