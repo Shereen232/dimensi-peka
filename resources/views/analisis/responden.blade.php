@@ -24,13 +24,20 @@ function statusText($score) {
 
     <br>
     <br>
+    <div class="flex justify-end mb-4">
+  <a href="{{ route('analisis.export.pdf') }}" 
+     class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300">
+    Ekspor PDF
+  </a>
+</div>
+
       <div class="w-full overflow-x-auto">
         <table id="hasilTable" class="display w-full whitespace-no-wrap">
           <thead>
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
               <th class="px-4 py-3">No</th>
               <th class="px-4 py-3">Nama</th>
-              <th class="px-4 py-3">Sekolah</th>
+              <th class="px-4 py-3">Kelurahan</th>
               <th class="px-4 py-3">Kelas</th>
               <th class="px-4 py-3">Skor ES</th>
               <th class="px-4 py-3">Skor CP</th>
@@ -47,7 +54,7 @@ function statusText($score) {
             <tr class="text-gray-700 dark:text-gray-400">
               <td class="px-4 py-3 text-sm">{{ $index + 1 }}</td>
               <td class="px-4 py-3 text-sm">{{ $item->user->name ?? '-' }}</td>
-              <td class="px-4 py-3 text-sm">{{ $item->user->sekolah ?? '-' }}</td>
+              <td class="px-4 py-3 text-sm">{{ $item->user->kelurahan ?? '-' }}</td>
               <td class="px-4 py-3 text-sm">{{ $item->user->kelas ?? '-' }}</td>
               <td class="px-4 py-3 text-sm">{{ $item->skor_es }}</td>
               <td class="px-4 py-3 text-sm">{{ $item->skor_cp }}</td>

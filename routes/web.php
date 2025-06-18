@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/edit', [KuesionerController::class, 'edit'])->name('edit');
         Route::put('/{id}', [KuesionerController::class, 'update'])->name('update');
         Route::delete('/{id}', [KuesionerController::class, 'destroy'])->name('destroy');
+        // Route::get('/{id}/export/pdf', [KuesionerController::class, 'exportPDF'])->name('export.pdf');
     });
 
     // Akun Saya
@@ -49,6 +50,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/analisis/responden', [AnalisisController::class, 'responden'])->name('analisis.responden');
+    Route::get('/analisis/export/pdf', [AnalisisController::class, 'exportPdf'])->name('analisis.export.pdf');
+
     Route::get('/grafik', [GrafikController::class, 'index'])->name('grafik.index');
     Route::get('/grafik/wilayah', [GrafikController::class, 'wilayah'])->name('grafik.wilayah');
     Route::get('/grafik/jenis-kelamin', [GrafikController::class, 'jenisKelamin'])->name('grafik.jenis_kelamin');

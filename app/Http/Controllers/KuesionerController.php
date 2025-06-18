@@ -6,6 +6,8 @@ use App\Models\Answer;
 use App\Models\Option;
 use App\Models\Question;
 use App\Models\Riwayat;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -142,5 +144,31 @@ class KuesionerController extends Controller
                 return '-';
         }
     }
+
+    // public function exportPDF($id)
+    // {
+    //     $user = User::findOrFail($id);
+
+    //     $riwayat = Riwayat::where('user_id', $id)->get();
+
+    //     $normal = $riwayat->where('hasil_total', 'NORMAL')->count();
+    //     $borderline = $riwayat->where('hasil_total', 'BORDERLINE')->count();
+    //     $abnormal = $riwayat->where('hasil_total', 'ABNORMAL')->count();
+    //     $total = $normal + $borderline + $abnormal;
+
+    //     $periode = Carbon::now()->translatedFormat('F Y');
+
+    //     $pdf = Pdf::loadView('kuesioner.export.pdf', [
+    //         'user' => $user,
+    //         'normal' => $normal,
+    //         'borderline' => $borderline,
+    //         'abnormal' => $abnormal,
+    //         'total' => $total,
+    //         'periode' => $periode
+    //     ]);
+
+    //     return $pdf->stream('laporan-hasil-kuesioner.pdf');
+    // }
+
 
 }

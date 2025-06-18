@@ -29,10 +29,7 @@
     @foreach($wilayah as $w)
     <div class="bg-white rounded-xl shadow-sm p-5 hover:shadow-lg transition duration-300">
       <p class="text-blue-600 font-bold text-center text-xl">{{ $w->total }} Orang</p>
-<p class="text-center text-gray-600 mt-2 text-sm tracking-wide">
-  Jenis Kelamin: <span class="font-medium text-gray-800">{{ $w->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}</span>
-</p>
-
+      <p class="text-gray-500 text-center text-sm mt-2">Kelurahan {{ $w->kelurahan }}</p>
     </div>
     @endforeach
   </div>

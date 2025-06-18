@@ -154,32 +154,42 @@
       </div>
     </div>
   </div>
+   
+  <div class="flex justify-center flex-wrap gap-4 mt-6">
+    <!-- Tombol Kembali -->
+    <a href="{{ route('kuesioner.index') }}"
+      class="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 transition">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      Kembali
+    </a>
 
-    
-   <div class="flex justify-center flex-wrap gap-4 mt-6">
-      <!-- Tombol Kembali -->
-      <a href="{{ route('kuesioner.index') }}"
-        class="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 transition">
+    <!-- Tombol Ekspor PDF -->
+    {{-- <a href="{{ route('kuesioner.export.pdf', ['id' => $user->id]) }}" target="_blank"
+      class="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 transition">
+      <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
+      </svg>
+      Ekspor PDF
+    </a> --}}
+
+    <!-- Tombol Isi Ulang -->
+    <form method="POST" action="{{ route('kuesioner.reset') }}">
+      @csrf
+      <button type="submit" onclick="return confirm('Yakin ingin mengisi ulang kuesioner?')"
+        class="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-red-600 rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 transition">
         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2"
             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5l15 15M19.5 4.5l-15 15"></path>
         </svg>
-        Kembali
-      </a>
+        Isi Ulang
+      </button>
+    </form>
+  </div>
 
-      <!-- Tombol Isi Ulang -->
-      <form method="POST" action="{{ route('kuesioner.reset') }}">
-        @csrf
-        <button type="submit" onclick="return confirm('Yakin ingin mengisi ulang kuesioner?')"
-          class="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-red-600 rounded-lg shadow-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 transition">
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2"
-              viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 4.5l15 15M19.5 4.5l-15 15"></path>
-          </svg>
-          Isi Ulang
-        </button>
-      </form>
-    </div>
 </main>
 
 {{-- Kirim data skor ke JS --}}

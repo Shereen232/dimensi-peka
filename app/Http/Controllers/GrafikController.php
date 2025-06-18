@@ -34,6 +34,8 @@ class GrafikController extends Controller
             ->groupBy('kelurahan')
             ->get();
 
+        
+
         $totalResponden = \App\Models\User::where('role', 'responden')
             ->whereNotNull('kelurahan')
             ->where('kelurahan', '!=', '')
