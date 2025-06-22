@@ -50,33 +50,41 @@
       {{-- Hanya untuk Admin --}}
       @if(auth()->user()->role === 'admin')
         {{-- User Management --}}
-        <li class="relative px-6 py-3">
-          @if (Request::is('user*'))
-            <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
-          @endif
-          <a href="{{ route('user.index') }}"
-            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 {{ Request::is('user*') ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400' }} hover:text-gray-800 dark:hover:text-gray-200">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2"/>
+        <li class="relative px-6 py-3" x-data="{ open: {{ Request::is('user*') || Request::is('detail-user*') ? 'true' : 'false' }} }">
+        <button @click="open = !open"
+          class="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 {{ Request::is('user*') || Request::is('detail-user*') ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400' }} hover:text-gray-800 dark:hover:text-gray-200">
+          <span class="inline-flex items-center">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87M16 3.13a4 4 0 010 7.75M8 3.13a4 4 0 100 7.75"/>
             </svg>
-            <span class="ml-4">User</span>
-          </a>
-        </li>
+            <span class="ml-4">Master User</span>
+          </span>
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06-.02L10 10.585l3.71-3.41a.75.75 0 111.06 1.06l-4.25 4a.75.75 0 01-1.06 0l-4.25-4a.75.75 0 01-.02-1.06z" clip-rule="evenodd"/>
+          </svg>
+        </button>
+
+        <ul x-show="open" x-transition class="mt-2 ml-6 space-y-1 text-sm font-medium text-gray-600 dark:text-gray-400">
+          <li>
+            <a href="{{ route('user.index') }}" class="block px-2 py-1 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('user*') ? 'text-gray-800 dark:text-gray-100' : '' }}">User</a>
+          </li>
+          <li>
+            <a href="{{ url('user/detail-user') }}" class="block px-2 py-1 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('detail-user*') ? 'text-gray-800 dark:text-gray-100' : '' }}">Detail User</a>
+          </li>
+        </ul>
+      </li>
+
 
         {{-- Data Analysis --}}
-        <li class="relative px-6 py-3">
-          @if (Request::is('/analisis/responden*'))
-            <span class="absolute inset-y-0 left-0 w-1 bg-purple-600 rounded-tr-lg rounded-br-lg" aria-hidden="true"></span>
-          @endif
-          <a href="{{ route('analisis.responden') }}"
-            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 {{ Request::is('/analisis/responden*') ? 'text-gray-800 dark:text-gray-100' : 'text-gray-500 dark:text-gray-400' }} hover:text-gray-800 dark:hover:text-gray-200">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"/>
-              <path d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>
-            </svg>
-            <span class="ml-4">Data Responden</span>
-          </a>
-        </li>
+         <li class="relative px-6 py-3">
+        <a href="{{ route('analisis.responden') }}"
+          class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M5 13l4 4L19 7" />
+          </svg>
+          <span class="ml-4">Hasil Skrining</span>
+        </a>
+      </li>
 
         <li class="relative px-6 py-3" x-data="{ open: {{ Request::is('grafik*') ? 'true' : 'false' }} }">
           <button @click="open = !open"
@@ -123,6 +131,16 @@
             </a>
           </li>
         </ul>
+      </li>
+
+       <li class="relative px-6 py-3">
+        <a href="{{ url('analisis/laporan') }}"
+          class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M9 17v-2h6v2m-6 4h6a2 2 0 002-2v-2a2 2 0 00-2-2H9a2 2 0 00-2 2v2a2 2 0 002 2z"/>
+          </svg>
+          <span class="ml-4">Laporan</span>
+        </a>
       </li>
 
       @endif

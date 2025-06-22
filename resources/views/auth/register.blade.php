@@ -36,7 +36,13 @@
 
             <form action="{{ url('/register') }}" method="POST">
               @csrf
-
+              <label class="block text-sm mb-3">
+                <span class="text-gray-700 dark:text-gray-400">NIK</span>
+                <input name="nik" type="text" required maxlength="16"
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input"
+                  value="{{ old('nik') }}">
+              </label>
+              
               <label class="block text-sm mb-3">
                 <span class="text-gray-700 dark:text-gray-400">Nama</span>
                 <input name="name" type="text" required class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-input" value="{{ old('name') }}">

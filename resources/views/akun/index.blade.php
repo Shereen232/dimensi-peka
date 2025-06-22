@@ -40,14 +40,40 @@
 
         @if(auth()->user()->role == 'responden')
           <label class="block text-sm mb-4">
+            <span class="text-gray-700 dark:text-gray-400">NIK</span>
+            <input name="nik" maxlength="16" class="block w-full mt-1 text-sm dark:bg-gray-700 dark:text-gray-300 form-input"
+              value="{{ auth()->user()->nik }}" />
+          </label>
+
+          <label class="block text-sm mb-4">
             <span class="text-gray-700 dark:text-gray-400">Umur</span>
             <input name="umur" class="block w-full mt-1 text-sm dark:bg-gray-700 dark:text-gray-300 form-input"
               value="{{ auth()->user()->umur }}" />
           </label>
 
           <label class="block text-sm mb-4">
+            <span class="text-gray-700 dark:text-gray-400">Kelurahan</span>
+            <select name="kelurahan"
+              class="block w-full mt-1 text-sm dark:bg-gray-700 dark:text-gray-300 form-select">
+              <option value="" disabled selected>Pilih kelurahan</option>
+              @foreach(['Bendan', 'Kramatsati', 'Tirto', 'Medono', 'Sokorejo', 'Noyontaan', 'Tondano', 'Klego', 'Pekalongan Selatan', 'Jenggot', 'Buaran', 'Kusuma Bangsa', 'Krapyak Kidul', 'Dukuh'] as $kel)
+                <option value="{{ $kel }}" {{ auth()->user()->kelurahan == $kel ? 'selected' : '' }}>{{ $kel }}</option>
+              @endforeach
+            </select>
+          </label>
+
+          <label class="block text-sm mb-4">
             <span class="text-gray-700 dark:text-gray-400">Alamat</span>
             <textarea name="alamat" class="block w-full mt-1 text-sm dark:bg-gray-700 dark:text-gray-300 form-textarea" rows="2">{{ auth()->user()->alamat }}</textarea>
+          </label>
+
+          <label class="block text-sm mb-4">
+            <span class="text-gray-700 dark:text-gray-400">Jenis Kelamin</span>
+            <select name="jenis_kelamin"
+              class="block w-full mt-1 text-sm dark:bg-gray-700 dark:text-gray-300 form-select">
+              <option value="L" {{ auth()->user()->jenis_kelamin == 'L' ? 'selected' : '' }}>L (Laki-laki)</option>
+              <option value="P" {{ auth()->user()->jenis_kelamin == 'P' ? 'selected' : '' }}>P (Perempuan)</option>
+            </select>
           </label>
 
           <label class="block text-sm mb-4">

@@ -51,11 +51,12 @@ class AuthController extends Controller
     }
 
 
-   public function register(Request $request)
+    public function register(Request $request)
     {
         $request->validate([
             'name'          => 'required|string|max:255',
             'email'         => 'required|email|unique:users,email',
+            'nik'           => 'required|digits:16|unique:users,nik',
             'password'      => 'required|min:6',
             'umur'          => 'nullable|integer',
             'jenis_kelamin' => 'required',
@@ -70,6 +71,7 @@ class AuthController extends Controller
             User::create([
                 'name'          => $request->name,
                 'email'         => $request->email,
+                'nik'           => $request->nik,
                 'password'      => Hash::make($request->password),
                 'umur'          => $request->umur,
                 'jenis_kelamin' => $request->jenis_kelamin,
@@ -85,5 +87,6 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan saat registrasi.')->withInput();
         }
     }
+
 
 }

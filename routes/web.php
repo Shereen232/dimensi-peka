@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/edit', [UserController::class, 'edit'])->name('edit');
         Route::put('/{id}', [UserController::class, 'update'])->name('update');
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('destroy');
+        Route::get('/detail-user', [UserController::class, 'detailUser'])->name('detail-user');
     });
 
     // Kuesioner (admin & responden)
@@ -51,6 +52,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/analisis/responden', [AnalisisController::class, 'responden'])->name('analisis.responden');
     Route::get('/analisis/export/pdf', [AnalisisController::class, 'exportPdf'])->name('analisis.export.pdf');
+    Route::get('/analisis/laporan', [AnalisisController::class, 'laporan'])->name('analisis.laporan');
+    Route::get('/analisis/export/laporan_pdf', [AnalisisController::class, 'exportLaporan'])->name('laporan.export');
 
     Route::get('/grafik', [GrafikController::class, 'index'])->name('grafik.index');
     Route::get('/grafik/wilayah', [GrafikController::class, 'wilayah'])->name('grafik.wilayah');

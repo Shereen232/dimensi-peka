@@ -18,13 +18,16 @@ class AkunController extends Controller
         $user = User::find(Auth::user()->id);
 
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'password' => 'nullable|min:6',
-            'umur' => 'nullable|integer',
-            'alamat' => 'nullable|string',
-            'kelas' => 'nullable|string',
-            'sekolah' => 'nullable|string',
+            'name'          => 'required|string|max:255',
+            'email'         => 'required|email|max:255',
+            'password'      => 'nullable|min:6',
+            'nik'           => 'nullable|digits:16|unique:users,nik,' . $user->id,
+            'umur'          => 'nullable|integer',
+            'alamat'        => 'nullable|string',
+            'kelas'         => 'nullable|string',
+            'sekolah'       => 'nullable|string',
+            'kelurahan'     => 'nullable|string|max:100',
+            'jenis_kelamin' => 'nullable|in:L,P',
         ]);
 
         $user->name = $request->name;
@@ -35,10 +38,13 @@ class AkunController extends Controller
         }
 
         if ($user->role === 'responden') {
-            $user->umur = $request->umur;
-            $user->alamat = $request->alamat;
-            $user->kelas = $request->kelas;
-            $user->sekolah = $request->sekolah;
+            $user->nik           = $request->nik;
+            $user->umur          = $request->umur;
+            $user->alamat        = $request->alamat;
+            $user->kelas         = $request->kelas;
+            $user->sekolah       = $request->sekolah;
+            $user->kelurahan     = $request->kelurahan;
+            $user->jenis_kelamin = $request->jenis_kelamin;
         }
 
         $user->save();

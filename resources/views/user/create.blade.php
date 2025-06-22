@@ -6,8 +6,18 @@
 
     <form id="user-form" action="{{ route('user.store') }}" method="POST" class="bg-white p-6 rounded shadow-md">
         @csrf
+
         <div class="mb-4">
-            <label for="name" class="block font-medium">name</label>
+            <label for="nik" class="block font-medium">NIK</label>
+            <input type="text" name="nik" class="w-full border p-2 rounded" 
+                required pattern="\d{16}" maxlength="16" minlength="16" 
+                title="NIK harus terdiri dari 16 angka" 
+                oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+        </div>
+
+
+        <div class="mb-4">
+            <label for="name" class="block font-medium">Nama</label>
             <input type="text" name="name" class="w-full border p-2 rounded" required>
         </div>
 
@@ -29,29 +39,60 @@
             </select>
         </div>
 
+        <div class="mb-4">
+            <label for="umur" class="block font-medium">Umur</label>
+            <input type="number" name="umur" class="w-full border p-2 rounded" required>
+        </div>
+
+        <div class="mb-4">
+            <label for="kelurahan" class="block font-medium">Kelurahan</label>
+            <select name="kelurahan" class="w-full border p-2 rounded" required>
+                <option value="" disabled selected>Pilih kelurahan</option>
+                <option value="Bendan">Bendan</option>
+                <option value="Kramatsari">Kramatsari</option>
+                <option value="Tirto">Tirto</option>
+                <option value="Medono">Medono</option>
+                <option value="Sokorejo">Sokorejo</option>
+                <option value="Noyontaan">Noyontaan</option>
+                <option value="Tondano">Tondano</option>
+                <option value="Klego">Klego</option>
+                <option value="Pekalongan Selatan">Pekalongan Selatan</option>
+                <option value="Jenggot">Jenggot</option>
+                <option value="Buaran">Buaran</option>
+                <option value="Kusuma Bangsa">Kusuma Bangsa</option>
+                <option value="Krapyak Kidul">Krapyak Kidul</option>
+                <option value="Dukuh">Dukuh</option>
+            </select>
+        </div>
+
+
+        <div class="mb-4">
+            <label for="alamat" class="block font-medium">Alamat</label>
+            <textarea name="alamat" class="w-full border p-2 rounded" rows="2" required></textarea>
+        </div>
+
+        <div class="mb-4">
+            <label for="kelas" class="block font-medium">Kelas</label>
+            <input type="text" name="kelas" class="w-full border p-2 rounded">
+        </div>
+
+        <div class="mb-4">
+            <label for="sekolah" class="block font-medium">Sekolah</label>
+            <input type="text" name="sekolah" class="w-full border p-2 rounded">
+        </div>
+
+        <div class="mb-4">
+            <label for="jenis_kelamin" class="block font-medium">Jenis Kelamin</label>
+            <select name="jenis_kelamin" class="w-full border p-2 rounded" required>
+                <option value="">-- Pilih --</option>
+                <option value="L">Laki-laki</option>
+                <option value="P">Perempuan</option>
+            </select>
+        </div>
+
         <button type="submit" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700">
             Simpan
         </button>
     </form>
 </div>
-
-
-<script>
-    function confirmSubmit() {
-        Swal.fire({
-            title: 'Simpan data?',
-            text: "Pastikan data sudah benar.",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#aaa',
-            confirmButtonText: 'Ya, simpan!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                document.getElementById('user-form').submit(); // pastikan form kamu punya id ini
-            }
-        })
-    }
-</script>
-
 @endsection

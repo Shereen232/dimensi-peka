@@ -24,12 +24,55 @@ function statusText($score) {
 
     <br>
     <br>
-    <div class="flex justify-end mb-4">
-  <a href="{{ route('analisis.export.pdf') }}" 
-     class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300">
-    Ekspor PDF
-  </a>
-</div>
+    
+
+  <form method="GET" class="flex flex-wrap items-center gap-4 mb-6">
+
+    <div>
+      <label for="puskesmas" class="block text-sm text-gray-600 dark:text-gray-400">Puskesmas</label>
+      <select name="puskesmas" id="puskesmas" class="form-select dark:bg-gray-700">
+        <option value="">-- Semua --</option>
+        @foreach($kelurahanList as $k)
+          <option value="{{ $k }}" {{ request('puskesmas') == $k ? 'selected' : '' }}>{{ $k }}</option>
+        @endforeach
+      </select>
+    </div>
+
+    <div>
+      <label for="bulan" class="block text-sm text-gray-600 dark:text-gray-400">Bulan</label>
+      <select name="bulan" id="bulan" class="form-select dark:bg-gray-700">
+        @for($m = 1; $m <= 12; $m++)
+          <option value="{{ $m }}" {{ $bulan == $m ? 'selected' : '' }}>
+              {{ \Carbon\Carbon::create()->month($m)->locale('id')->translatedFormat('F') }}
+          </option>
+        @endfor
+      </select>
+    </div>
+
+    <div>
+      <label for="tahun" class="block text-sm text-gray-600 dark:text-gray-400">Tahun</label>
+      <select name="tahun" id="tahun" class="form-select dark:bg-gray-700">
+        @for($t = date('Y'); $t >= 2020; $t--)
+          <option value="{{ $t }}" {{ $tahun == $t ? 'selected' : '' }}>{{ $t }}</option>
+        @endfor
+      </select>
+    </div>
+
+    <div class="mt-6">
+      <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">Filter</button>
+    </div>
+
+  </form>
+
+
+  <div class="flex justify-end mb-4">
+    <a href="{{ route('analisis.export.pdf', request()->only('puskesmas', 'bulan', 'tahun')) }}"
+      class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300">
+      Ekspor PDF
+    </a>
+  </div>
+
+
 
       <div class="w-full overflow-x-auto">
         <table id="hasilTable" class="display w-full whitespace-no-wrap">
@@ -76,6 +119,14 @@ function statusText($score) {
             @endforelse
           </tbody>
         </table>
+
+        
+  @if($kosong)
+    <div class="text-center text-gray-500 my-4">
+      Belum ada data untuk bulan ini.
+    </div>
+  @endif
+  
       </div>
     </div>
   </div>
