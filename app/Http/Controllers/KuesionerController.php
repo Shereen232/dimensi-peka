@@ -145,30 +145,127 @@ class KuesionerController extends Controller
         }
     }
 
-    // public function exportPDF($id)
-    // {
-    //     $user = User::findOrFail($id);
+    private function generateKeterangan($riwayat)
+    {
+        $penjelasan = [
+            'Total' => [
+                'NORMAL' => [
+                    'ket' => 'Normal pada total kesulitan berarti anak belajar dengan baik, tidak memiliki gangguan yang berarti, baik berasal dari faktor internal anak maupun eksternalnya.',
+                    'rekom' => '-',
+                ],
+                'BORDERLINE' => [
+                    'ket' => 'Terdapat beberapa tanda potensi masalah psikososial, meskipun belum tergolong sebagai gangguan yang pasti.',
+                    'rekom' => 'Lakukan skrining ulang dalam 3–6 bulan. Bila ada perubahan signifikan, konsultasikan ke psikolog anak atau psikiater.',
+                ],
+                'ABNORMAL' => [
+                    'ket' => 'Ada indikasi kuat masalah psikososial yang membutuhkan perhatian lebih lanjut.',
+                    'rekom' => 'Segera konsultasi dengan psikolog anak atau psikiater.',
+                ],
+            ],
+            'E' => [
+                'NORMAL' => [
+                    'ket' => 'Anak mampu mengendalikan perasaan dan pikirannya secara emosional.',
+                    'rekom' => '-',
+                ],
+                'BORDERLINE' => [
+                    'ket' => 'Terdapat tanda awal kesulitan emosional, seperti cemas, sedih, atau takut berlebihan.',
+                    'rekom' => 'Perhatikan perubahan suasana hati, mudah menangis, sulit tidur, atau menghindari aktivitas sosial.',
+                ],
+                'ABNORMAL' => [
+                    'ket' => 'Mengalami kesulitan emosional yang signifikan seperti cemas berlebihan, sering merasa sedih atau takut.',
+                    'rekom' => 'Segera konsultasikan dengan psikolog anak atau psikiater.',
+                ],
+            ],
+            'C' => [
+                'NORMAL' => [
+                    'ket' => 'Tidak ada tanda-tanda perilaku bermasalah yang signifikan.',
+                    'rekom' => '-',
+                ],
+                'BORDERLINE' => [
+                    'ket' => 'Indikasi awal kesulitan perilaku seperti mudah marah atau membangkang.',
+                    'rekom' => 'Observasi lebih lanjut terhadap perilaku di rumah dan sekolah.',
+                ],
+                'ABNORMAL' => [
+                    'ket' => 'Menunjukkan perilaku bermasalah signifikan seperti agresif, kasar, atau suka mencuri.',
+                    'rekom' => 'Segera konsultasikan dengan psikolog anak.',
+                ],
+            ],
+            'H' => [
+                'NORMAL' => [
+                    'ket' => 'Tidak menunjukkan gangguan perhatian atau hiperaktivitas yang berarti.',
+                    'rekom' => '-',
+                ],
+                'BORDERLINE' => [
+                    'ket' => 'Tanda-tanda gangguan perhatian atau impulsivitas mulai terlihat.',
+                    'rekom' => 'Perlu pemantauan lebih lanjut.',
+                ],
+                'ABNORMAL' => [
+                    'ket' => 'Mengalami gangguan perhatian dan hiperaktivitas yang nyata.',
+                    'rekom' => 'Segera konsultasikan dengan psikolog atau psikiater.',
+                ],
+            ],
+            'P' => [
+                'NORMAL' => [
+                    'ket' => 'Relasi sosial anak tergolong baik.',
+                    'rekom' => '-',
+                ],
+                'BORDERLINE' => [
+                    'ket' => 'Mulai terlihat kesulitan dalam hubungan sosial.',
+                    'rekom' => 'Dorong anak untuk aktif di kegiatan sosial.',
+                ],
+                'ABNORMAL' => [
+                    'ket' => 'Kesulitan sosial yang signifikan.',
+                    'rekom' => 'Konsultasikan dengan psikolog atau konselor sekolah.',
+                ],
+            ],
+            'Pro' => [
+                'NORMAL' => [
+                    'ket' => 'Kemampuan sosial anak baik.',
+                    'rekom' => '-',
+                ],
+                'BORDERLINE' => [
+                    'ket' => 'Kemungkinan keterbatasan empati atau kerja sama.',
+                    'rekom' => 'Berikan teladan dan bimbingan sosial secara langsung.',
+                ],
+                'ABNORMAL' => [
+                    'ket' => 'Kurangnya kepedulian terhadap orang lain.',
+                    'rekom' => 'Segera konsultasikan dengan psikolog atau konselor sekolah.',
+                ],
+            ],
+        ];
 
-    //     $riwayat = Riwayat::where('user_id', $id)->get();
+        return [
+            'Total' => $penjelasan['Total'][$riwayat->hasil_total] ?? ['ket' => '-', 'rekom' => '-'],
+            'E'     => $penjelasan['E'][$riwayat->hasil_es] ?? ['ket' => '-', 'rekom' => '-'],
+            'C'     => $penjelasan['C'][$riwayat->hasil_cp] ?? ['ket' => '-', 'rekom' => '-'],
+            'H'     => $penjelasan['H'][$riwayat->hasil_h] ?? ['ket' => '-', 'rekom' => '-'],
+            'P'     => $penjelasan['P'][$riwayat->hasil_p] ?? ['ket' => '-', 'rekom' => '-'],
+            'Pro'   => $penjelasan['Pro'][$riwayat->hasil_pro] ?? ['ket' => '-', 'rekom' => '-'],
+        ];
+    }
 
-    //     $normal = $riwayat->where('hasil_total', 'NORMAL')->count();
-    //     $borderline = $riwayat->where('hasil_total', 'BORDERLINE')->count();
-    //     $abnormal = $riwayat->where('hasil_total', 'ABNORMAL')->count();
-    //     $total = $normal + $borderline + $abnormal;
+    public function exportPDF($id)
+    {
+        $user = User::findOrFail($id);
+        $riwayat = Riwayat::where('user_id', $user->id)->latest()->firstOrFail();
 
-    //     $periode = Carbon::now()->translatedFormat('F Y');
+        $score = [
+            'es' => $riwayat->skor_es,
+            'cp' => $riwayat->skor_cp,
+            'h'  => $riwayat->skor_h,
+            'p'  => $riwayat->skor_p,
+            'pro' => $riwayat->skor_pro,
+            'total' => $riwayat->total_kesulitan,
+        ];
 
-    //     $pdf = Pdf::loadView('kuesioner.export.pdf', [
-    //         'user' => $user,
-    //         'normal' => $normal,
-    //         'borderline' => $borderline,
-    //         'abnormal' => $abnormal,
-    //         'total' => $total,
-    //         'periode' => $periode
-    //     ]);
+        // INI PENTING: Tambahkan array keterangan
+        $keterangan = $this->generateKeterangan($riwayat);
 
-    //     return $pdf->stream('laporan-hasil-kuesioner.pdf');
-    // }
+        $pdf = Pdf::loadView('kuesioner.export.pdf', compact('user', 'riwayat', 'score', 'keterangan'));
+
+        return $pdf->download('hasil_skrining_' . $user->name . '.pdf');
+    }
+
 
 
 }

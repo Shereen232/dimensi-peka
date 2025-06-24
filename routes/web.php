@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{id}/edit', [KuesionerController::class, 'edit'])->name('edit');
         Route::put('/{id}', [KuesionerController::class, 'update'])->name('update');
         Route::delete('/{id}', [KuesionerController::class, 'destroy'])->name('destroy');
-        // Route::get('/{id}/export/pdf', [KuesionerController::class, 'exportPDF'])->name('export.pdf');
+        Route::get('/{id}/export/pdf', [KuesionerController::class, 'exportPDF'])->name('export.pdf');
     });
 
     // Akun Saya

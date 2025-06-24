@@ -72,7 +72,7 @@
                 </select>
               </label>
 
-               <label class="block text-sm mb-3">
+              <label class="block text-sm mb-3">
                 <span class="text-gray-700 dark:text-gray-400">Kelurahan</span>
                 <select id="kelurahan" name="kelurahan" placeholder="Pilih kelurahan..." required
                   class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 form-select">

@@ -117,19 +117,19 @@
             </a>
           </li>
 
-          <li>
+          {{-- <li>
             <a class="block px-2 py-1 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('grafik/kategori*') ? 'text-gray-800 dark:text-gray-100' : '' }}"
               href="{{ url('/grafik/kategori') }}">
               Data Kategori
             </a>
-          </li>
+          </li> --}}
 
-          <li>
+          {{-- <li>
             <a class="block px-2 py-1 hover:text-gray-800 dark:hover:text-gray-200 {{ Request::is('grafik/kondisi*') ? 'text-gray-800 dark:text-gray-100' : '' }}"
               href="{{ url('/grafik/kondisi') }}">
               Data Kondisi
             </a>
-          </li>
+          </li> --}}
         </ul>
       </li>
 

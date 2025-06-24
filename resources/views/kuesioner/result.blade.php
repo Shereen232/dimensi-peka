@@ -167,14 +167,14 @@
     </a>
 
     <!-- Tombol Ekspor PDF -->
-    {{-- <a href="{{ route('kuesioner.export.pdf', ['id' => $user->id]) }}" target="_blank"
+    <a href="{{ route('kuesioner.export.pdf', ['id' => $user->id]) }}" target="_blank"
       class="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-red-500 rounded-lg shadow-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 transition">
       <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2"
           viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
       </svg>
       Ekspor PDF
-    </a> --}}
+    </a>
 
     <!-- Tombol Isi Ulang -->
     <form method="POST" action="{{ route('kuesioner.reset') }}">

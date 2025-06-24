@@ -1,111 +1,176 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Laporan Data Hasil Skrining</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      font-size: 12px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid black;
-      padding: 6px;
-      text-align: center;
-    }
-    .no-border {
-      border: none;
-    }
-    .text-left {
-      text-align: left;
-    }
-    .bg-yellow {
-      background-color: #ffff99;
-      font-weight: bold;
-    }
-    .text-red {
-      color: red;
-      font-weight: bold;
-    }
-    .text-small {
-      font-size: 10px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Laporan Skrining Mental Emosional Anak</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+
+        body {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 12pt;
+            color: #000;
+            line-height: 1.5;
+        }
+
+        .container-header {
+            display: table;
+            width: 100%;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+
+        .header-column {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .header-left {
+            width: 15%;
+            text-align: left;
+        }
+
+        .header-center {
+            width: 70%;
+            text-align: center;
+        }
+
+        .header-right {
+            width: 15%;
+        }
+
+        .header-logo {
+            width: 100px;
+            height: 140px;
+            object-fit: contain;
+        }
+
+        .header-text h1 {
+            font-size: 16pt;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .header-text h2 {
+            font-size: 16pt;
+            margin: 5px 0 0;
+            font-weight: bold;
+        }
+
+        .header-text p {
+            font-size: 12pt;
+            margin: 2px 0;
+        }
+
+        .header-text u {
+            text-decoration: underline;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 14pt;
+            font-weight: bold;
+            border-bottom: 1px solid #000;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        td {
+            padding: 5px;
+            vertical-align: top;
+        }
+
+        td.label {
+            width: 35%;
+            font-weight: bold;
+        }
+
+        .category-title {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 13pt;
+            border-top: 1px dashed #444;
+            padding-top: 6px;
+        }
+    </style>
 </head>
 <body>
-  <table class="no-border">
-    <tr class="no-border">
-      <td colspan="2" class="no-border">
-        <img src="{{ public_path('logo.png') }}" alt="Logo" width="80">
-      </td>
-      <td colspan="4" class="no-border" style="text-align: center;">
-        <h3>PEMERINTAH KOTA PEKALONGAN<br>DINAS KESEHATAN</h3>
-        <div class="text-small">
-          Jl. Jetayu No.4 Telp/Fax (0285) 421972 Pekalongan Kode Pos 51114<br>
-          Website: <u>http://www.dinkes.kotapekalongan.go.id</u> |
-          E-mail: <u>dinkes_kotapekalongan@yahoo.com</u>
+    <div class="container-header">
+        <div class="header-column header-left">
+            <img src="{{ public_path('logo_pekalongan.png') }}" alt="Logo Kota Pekalongan" class="header-logo">
         </div>
-      </td>
-    </tr>
-  </table>
+        <div class="header-column header-center header-text">
+            <h1>PEMERINTAH KOTA PEKALONGAN</h1>
+            <h2>DINAS KESEHATAN</h2>
+            <p>Jl. Jetayu No.4 Telp/Fax (0285) 421972 Pekalongan 51114</p>
+            <p>Website: <u>http://www.dinkes.kotapekalongan.go.id</u> | Email: <u>dinkes_kotapekalongan@yahoo.com</u></p>
+        </div>
+        <div class="header-column header-right">
+            <!-- Kosong -->
+        </div>
+    </div>
 
-  <hr>
 
-  <h4 style="text-align: center;" class="text-red">Laporan Data Hasil Skrining</h4>
-  <p><strong>Periode:</strong> {{ $periode }}</p>
-  <p><strong>Puskesmas:</strong> {{ $puskesmas ?? '-' }}</p>
-  <p><strong>Total Skrining:</strong> {{ $total }}</p>
+    <div class="section">
+        <div class="section-title">Data Anak</div>
+        <table>
+            <tr><td class="label">ID Anak</td><td>: {{ $user->id }}</td></tr>
+            <tr><td class="label">Nama</td><td>: {{ $user->name }}</td></tr>
+            <tr><td class="label">Jenis Kelamin</td><td>: {{ $user->jenis_kelamin ?? '-' }}</td></tr>
+            <tr><td class="label">Umur</td><td>: {{ $user->umur }} tahun</td></tr>
+            <tr><td class="label">Skrining pada</td><td>: {{ $riwayat->tanggal }}</td></tr>
+        </table>
+    </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>No.</th>
-        <th>Kategori</th>
-        <th>Jumlah</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-    <td>1</td>
-    <td>Normal</td>
-    <td>{{ $normal }}</td>
-</tr>
-<tr>
-    <td>2</td>
-    <td>Borderline</td>
-    <td>{{ $borderline }}</td>
-</tr>
-<tr>
-    <td>3</td>
-    <td>Abnormal</td>
-    <td>{{ $abnormal }}</td>
-</tr>
-<tr style="background-color: yellow;">
-    <td colspan="2"><strong>Total Keseluruhan</strong></td>
-    <td><strong>{{ $total }}</strong></td>
-</tr>
-    </tbody>
-  </table>
+    <div class="section">
+        <div class="section-title">Hasil Skrining Mental Emosional</div>
+        <p>
+            Berdasarkan Strength and Difficulties Questionnaire, berikut adalah hasil skrining dan interpretasinya:
+        </p>
 
-  <br><br><br>
+        <table>
+            <tr><td class="label">Total Kesulitan</td><td>: {{ $riwayat->hasil_total }} (Skor: {{ $riwayat->total_kesulitan }})</td></tr>
+            <tr><td class="label">Keterangan</td><td>: {{ $keterangan['Total']['ket'] ?? '-' }}</td></tr>
+            <tr><td class="label">Rekomendasi</td><td>: {{ $keterangan['Total']['rekom'] ?? '-' }}</td></tr>
+        </table>
 
-  <table class="no-border" width="100%">
-    <tr class="no-border">
-      <td class="text-center no-border">
-        Mengetahui<br>
-        Kepala Puskesmas<br><br><br><br>
-        (...........................)
-      </td>
-      <td class="text-center no-border">
-        Pekalongan, {{ \Carbon\Carbon::now()->translatedFormat('d F Y') }}<br>
-        Yang membuat,<br><br><br><br>
-        (...........................)
-      </td>
-    </tr>
-  </table>
+        @php
+            $kategori = [
+                'E' => 'Gejala Emosional',
+                'C' => 'Masalah Perilaku',
+                'H' => 'Hiperaktivitas',
+                'P' => 'Masalah Teman Sebaya',
+                'Pro' => 'Perilaku Prososial'
+            ];
+            $map = ['E' => 'es', 'C' => 'cp', 'H' => 'h', 'P' => 'p', 'Pro' => 'pro'];
+        @endphp
+
+        @foreach ($kategori as $kode => $label)
+            @php
+                $hasil = $riwayat->{'hasil_' . $map[$kode]};
+                $skor = $riwayat->{'skor_' . $map[$kode]};
+            @endphp
+            <div class="category-title">{{ $label }} ({{ $kode }})</div>
+            <table>
+                <tr><td class="label">Hasil</td><td>: {{ $hasil }} (Skor: {{ $skor }})</td></tr>
+                <tr><td class="label">Keterangan</td><td>: {{ $keterangan[$kode]['ket'] ?? '-' }}</td></tr>
+                <tr><td class="label">Rekomendasi</td><td>: {{ $keterangan[$kode]['rekom'] ?? '-' }}</td></tr>
+            </table>
+        @endforeach
+    </div>
 </body>
 </html>

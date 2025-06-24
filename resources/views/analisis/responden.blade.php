@@ -29,7 +29,7 @@ function statusText($score) {
   <form method="GET" class="flex flex-wrap items-center gap-4 mb-6">
 
     <div>
-      <label for="puskesmas" class="block text-sm text-gray-600 dark:text-gray-400">Puskesmas</label>
+      <label for="puskesmas" class="block text-sm text-gray-600 dark:text-gray-400">Kelurahan</label>
       <select name="puskesmas" id="puskesmas" class="form-select dark:bg-gray-700">
         <option value="">-- Semua --</option>
         @foreach($kelurahanList as $k)
@@ -65,12 +65,12 @@ function statusText($score) {
   </form>
 
 
-  <div class="flex justify-end mb-4">
+  {{-- <div class="flex justify-end mb-4">
     <a href="{{ route('analisis.export.pdf', request()->only('puskesmas', 'bulan', 'tahun')) }}"
       class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300">
       Ekspor PDF
     </a>
-  </div>
+  </div> --}}
 
 
 
@@ -79,6 +79,7 @@ function statusText($score) {
           <thead>
             <tr class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-gray-50 dark:bg-gray-800 dark:text-gray-400">
               <th class="px-4 py-3">No</th>
+              <th class="px-4 py-3">NIK</th>
               <th class="px-4 py-3">Nama</th>
               <th class="px-4 py-3">Kelurahan</th>
               <th class="px-4 py-3">Kelas</th>
@@ -96,6 +97,7 @@ function statusText($score) {
             @forelse($riwayat as $index => $item)
             <tr class="text-gray-700 dark:text-gray-400">
               <td class="px-4 py-3 text-sm">{{ $index + 1 }}</td>
+              <td class="px-4 py-3 text-sm">{{ $item->user->nik ?? '-' }}</td>
               <td class="px-4 py-3 text-sm">{{ $item->user->name ?? '-' }}</td>
               <td class="px-4 py-3 text-sm">{{ $item->user->kelurahan ?? '-' }}</td>
               <td class="px-4 py-3 text-sm">{{ $item->user->kelas ?? '-' }}</td>
