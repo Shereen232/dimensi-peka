@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\RiwayatExport;
+
 
 
 class AnalisisController extends Controller
@@ -201,5 +204,26 @@ class AnalisisController extends Controller
             'totalKeseluruhan' => $totalKeseluruhan
         ]);
     }
+
+   public function exportExcel(Request $request)
+    {
+        $bulan     = $request->input('bulan', date('n'));
+        $tahun     = $request->input('tahun', date('Y'));
+        $kelurahan = $request->input('puskesmas');
+
+        $query = \App\Models\Riwayat::with(['user', 'answers']);
+
+        if ($kelurahan) {
+            $query->whereHas('user', fn ($q) => $q->where('kelurahan', $kelurahan));
+        }
+
+        $query->whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun);
+
+        $riwayat = $query->get();
+
+        return Excel::download(new RiwayatExport($riwayat), "rekap_sdq_{$bulan}_{$tahun}.xlsx");
+    }
+
 
 }

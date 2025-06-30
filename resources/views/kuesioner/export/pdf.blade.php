@@ -9,11 +9,14 @@
             margin: 2cm;
         }
 
+        *,p{
+            line-height: 1;
+        }
+
         body {
             font-family: "Times New Roman", Times, serif;
             font-size: 12pt;
             color: #000;
-            line-height: 1.5;
         }
 
         .container-header {

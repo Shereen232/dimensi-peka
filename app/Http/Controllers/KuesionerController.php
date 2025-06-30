@@ -39,12 +39,21 @@ class KuesionerController extends Controller
 
         $score = ['Pro' => 0, 'E' => 0, 'C' => 0, 'H' => 0, 'P' => 0];
 
+        $latestAnswer = Riwayat::latest()->first();
+
+        if (!$latestAnswer) $urutan = 1;
+        else {
+            if ($latestAnswer->urutan) $urutan = $latestAnswer->urutan + 1;
+            else $urutan = 1;
+        }
+
         foreach ($questions as $q) {
             $selected = $answers['answers' . $q->id];
             $option = Option::find($selected);
 
             Answer::create([
                 'user_id' => $userId,
+                'urutan'    => $urutan,
                 'question_id' => $q->id,
                 'option_id' => $selected,
             ]);
@@ -57,6 +66,7 @@ class KuesionerController extends Controller
         // Hitung dan simpan ke tabel riwayat
         $riwayat = new Riwayat();
         $riwayat->user_id = $userId;
+        $riwayat->urutan = $urutan;
         $riwayat->tanggal = Carbon::now()->toDateString();
 
         $riwayat->skor_es = $score['E'];

@@ -65,6 +65,18 @@ function statusText($score) {
   </form>
 
 
+  <!-- Tombol Ekspor Excel -->
+  <a href="{{ route('analisis.export.excel', request()->only('puskesmas', 'bulan', 'tahun')) }}" target="_blank"
+    class="inline-flex items-center px-6 py-2 text-sm font-medium text-white bg-green-600 rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 transition">
+    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v16h16M4 4l16 16"></path>
+    </svg>
+    Ekspor Excel
+  </a>
+
+
+
   {{-- <div class="flex justify-end mb-4">
     <a href="{{ route('analisis.export.pdf', request()->only('puskesmas', 'bulan', 'tahun')) }}"
       class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300">

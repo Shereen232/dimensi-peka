@@ -11,27 +11,17 @@ class Riwayat extends Model
 
     protected $table = 'riwayat';
 
-    protected $fillable = [
-        'user_id',
-        'tanggal',
-        'skor_es',
-        'hasil_es',
-        'skor_cp',
-        'hasil_cp',
-        'skor_h',
-        'hasil_h',
-        'skor_p',
-        'hasil_p',
-        'skor_pro',
-        'hasil_pro',
-        'total_kesulitan',
-        'hasil_total',
-    ];
+    protected $guarded = ['id'];
 
     protected $dates = ['tanggal', 'created_at', 'updated_at'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'urutan', 'urutan');
     }
 }
