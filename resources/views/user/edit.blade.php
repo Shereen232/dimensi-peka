@@ -10,7 +10,7 @@
 
         <div class="mb-4">
             <label for="nik" class="block font-medium">NIK</label>
-             <input type="text" name="name" class="w-full border p-2 rounded" value="{{ $user->nik }}" required>
+             <input type="text" name="nik" class="w-full border p-2 rounded" value="{{ $user->nik }}" required>
         </div>
 
         <div class="mb-4">
