@@ -32,14 +32,6 @@
         </div>
 
         <div class="mb-4">
-            <label for="role" class="block font-medium">Role</label>
-            <select name="role" class="w-full border p-2 rounded" required>
-                <option value="admin">Admin</option>
-                <option value="responden">Responden</option>
-            </select>
-        </div>
-
-        <div class="mb-4">
             <label for="umur" class="block font-medium">Umur</label>
             <input type="number" name="umur" class="w-full border p-2 rounded" required>
         </div>
@@ -87,6 +79,14 @@
                 <option value="">-- Pilih --</option>
                 <option value="L">Laki-laki</option>
                 <option value="P">Perempuan</option>
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label for="role" class="block font-medium">Role</label>
+            <select name="role" class="w-full border p-2 rounded" required>
+                <option value="admin">Admin</option>
+                <option value="responden">Responden</option>
             </select>
         </div>
 

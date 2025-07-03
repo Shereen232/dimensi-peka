@@ -42,7 +42,7 @@
   <div class="subtitle">
     Periode: <u>{{ $periode }}</u><br>
     Total Skrining: <strong>{{ $total }}</strong><br><br>
-    Hasil Skrining per Puskesmas =
+    Hasil Skrining per Kelurahan =
   </div>
 
   <!-- Tabel -->
@@ -50,7 +50,7 @@
     <thead>
       <tr>
         <th>No</th>
-        <th>Nama Puskesmas</th>
+        <th>Nama Kelurahan</th>
         <th>Normal</th>
         <th>Borderline</th>
         <th>Abnormal</th>

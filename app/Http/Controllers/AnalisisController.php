@@ -225,5 +225,77 @@ class AnalisisController extends Controller
         return Excel::download(new RiwayatExport($riwayat), "rekap_sdq_{$bulan}_{$tahun}.xlsx");
     }
 
+    public function preview(Request $request)
+    {
+        $bulan = $request->input('bulan', Carbon::now()->month);
+        $tahun = $request->input('tahun', Carbon::now()->year);
+
+        // Daftar kelurahan tetap
+        $kelurahanList = [
+            'Bendan', 'Kramatsari', 'Tirto', 'Medono', 'Sokorejo', 'Noyontaan',
+            'Klego', 'Pekalongan Selatan', 'Jenggot', 'Kusuma Bangsa',
+            'Krapyak Kidul', 'Dukuh', 'Buaran', 'Tondano'
+        ];
+
+        $data = [];
+        $totalNormal = $totalBorderline = $totalAbnormal = 0;
+
+        foreach ($kelurahanList as $kelurahan) {
+            $normal = Riwayat::whereHas('user', function ($query) use ($kelurahan) {
+                    $query->where('kelurahan', $kelurahan);
+                })
+                ->whereMonth('created_at', $bulan)
+                ->whereYear('created_at', $tahun)
+                ->where('hasil_total', 'NORMAL')
+                ->count();
+
+            $borderline = Riwayat::whereHas('user', function ($query) use ($kelurahan) {
+                    $query->where('kelurahan', $kelurahan);
+                })
+                ->whereMonth('created_at', $bulan)
+                ->whereYear('created_at', $tahun)
+                ->where('hasil_total', 'BORDERLINE')
+                ->count();
+
+            $abnormal = Riwayat::whereHas('user', function ($query) use ($kelurahan) {
+                    $query->where('kelurahan', $kelurahan);
+                })
+                ->whereMonth('created_at', $bulan)
+                ->whereYear('created_at', $tahun)
+                ->where('hasil_total', 'ABNORMAL')
+                ->count();
+
+            $total = $normal + $borderline + $abnormal;
+
+            $data[] = [
+                'kelurahan' => $kelurahan,
+                'normal' => $normal,
+                'borderline' => $borderline,
+                'abnormal' => $abnormal,
+                'total' => $total,
+            ];
+
+            $totalNormal += $normal;
+            $totalBorderline += $borderline;
+            $totalAbnormal += $abnormal;
+        }
+
+        $total = $totalNormal + $totalBorderline + $totalAbnormal;
+        $periode = Carbon::createFromDate($tahun, $bulan)->translatedFormat('F Y');
+
+        $pdf = Pdf::loadView('analisis.export.laporan_pdf', [
+            'data' => $data,
+            'periode' => $periode,
+            'totalNormal' => $totalNormal,
+            'totalBorderline' => $totalBorderline,
+            'totalAbnormal' => $totalAbnormal,
+            'total' => $total,
+        ]);
+
+        return response($pdf->output(), 200)
+            ->header('Content-Type', 'application/pdf');
+    }
+
+
 
 }

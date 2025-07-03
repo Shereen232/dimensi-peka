@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\KuesionerController; 
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\AnalisisController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\GrafikController;
@@ -49,18 +50,24 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
 
 
+    // Analisis
 
-    Route::get('/analisis/responden', [AnalisisController::class, 'responden'])->name('analisis.responden');
-    Route::get('/analisis/export/pdf', [AnalisisController::class, 'exportPdf'])->name('analisis.export.pdf');
-    Route::get('/analisis/laporan', [AnalisisController::class, 'laporan'])->name('analisis.laporan');
-    Route::get('/analisis/export/laporan_pdf', [AnalisisController::class, 'exportLaporan'])->name('laporan.export');
-    Route::get('/analisis/export/excel', [AnalisisController::class, 'exportExcel'])->name('analisis.export.excel');
+    Route::prefix('analisis')->name('analisis.')->group(function () {
+        Route::get('/responden', [AnalisisController::class, 'responden'])->name('responden');
+        Route::get('/laporan', [AnalisisController::class, 'laporan'])->name('laporan');
+        Route::get('/export/laporan_pdf', [AnalisisController::class, 'exportLaporan'])->name('export.laporan_pdf');
+        Route::get('/export/preview', [AnalisisController::class, 'preview'])->name('export.preview');
+        Route::get('/export/pdf', [AnalisisController::class, 'exportPdf'])->name('export.pdf');
+        Route::get('/export/excel', [AnalisisController::class, 'exportExcel'])->name('export.excel');
+
+    });
+
 
     Route::get('/grafik', [GrafikController::class, 'index'])->name('grafik.index');
     Route::get('/grafik/wilayah', [GrafikController::class, 'wilayah'])->name('grafik.wilayah');
     Route::get('/grafik/jenis-kelamin', [GrafikController::class, 'jenisKelamin'])->name('grafik.jenis_kelamin');
 
-
+    Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
 
 
 

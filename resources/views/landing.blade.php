@@ -18,7 +18,7 @@
                 <a href="#manfaat" class="text-gray-600 hover:text-blue-600">Formulir</a>
                 <a href="#fitur" class="text-gray-600 hover:text-blue-600">Tentang</a>
                 <a href="#faq" class="text-gray-600 hover:text-blue-600">Pertanyaan</a>
-                <a href="#kontak" class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700">Login</a>
+                <a href="{{ route('login') }}" class="bg-blue-600 text-white px-4 py-2 rounded-full hover:bg-blue-700">Login</a>
             </nav>
             </div>
         </header>
@@ -39,7 +39,7 @@
         <!-- Tentang -->
         <section id="tentang" class="py-20 bg-white">
             <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-            <img src="{{ asset('images/mental-health.svg') }}" alt="Ilustrasi Tes" class="w-full" data-aos="fade-right">
+            <img src="" class="w-full" data-aos="fade-right">
             <div data-aos="fade-left">
                 <h3 class="text-3xl font-semibold text-blue-700 mb-4">Apa Itu MentalSehat?</h3>
                 <p class="text-gray-600 mb-4">

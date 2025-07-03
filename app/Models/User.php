@@ -35,6 +35,7 @@ class User extends Authenticatable
         'sekolah',
         'role',
         'created_at',
+        'updated_at',
         'login_at',
     ];
 

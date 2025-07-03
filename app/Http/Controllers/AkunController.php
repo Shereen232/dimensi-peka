@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth; // Pastikan ini ada
+use Illuminate\Support\Facades\DB;   // Pastikan ini ada untuk setTriggerSessionVariables()
 use App\Models\User;
 
 class AkunController extends Controller
@@ -30,6 +31,11 @@ class AkunController extends Controller
             'jenis_kelamin' => 'nullable|in:L,P',
         ]);
 
+        // --- Panggil setTriggerSessionVariables() sebelum operasi $user->save() ---
+        // Ini memastikan variabel sesi seperti user_id, IP, dan user agent diatur
+        // agar trigger database bisa menangkapnya.
+        $this->setTriggerSessionVariables();
+
         $user->name = $request->name;
         $user->email = $request->email;
 
@@ -47,8 +53,25 @@ class AkunController extends Controller
             $user->jenis_kelamin = $request->jenis_kelamin;
         }
 
-        $user->save();
+        $user->save(); // Operasi Eloquent ini akan memicu trigger database
 
         return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
+    }
+
+    // --- Tambahkan metode pembantu ini di AkunController Anda ---
+    protected function setTriggerSessionVariables()
+    {
+        // Mendapatkan ID user yang sedang login
+        $userId = Auth::check() ? Auth::id() : null;
+
+        // Mendapatkan IP Address dari request
+        $ipAddress = request()->ip();
+        // Mendapatkan User Agent dari request
+        $userAgent = request()->header('User-Agent');
+
+        // Mengatur variabel sesi di koneksi database saat ini
+        DB::statement("SET @user_id_session = ?;", [$userId]);
+        DB::statement("SET @ip_address_session = ?;", [$ipAddress]);
+        DB::statement("SET @user_agent_session = ?;", [$userAgent]);
     }
 }
