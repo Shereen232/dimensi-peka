@@ -133,18 +133,11 @@ function statusText($score) {
             </tr>
             @empty
             <tr>
-              <td colspan="12" class="px-4 py-3 text-center text-gray-500">Belum ada data kuesioner.</td>
+              <td colspan="13" class="px-4 py-3 text-center text-gray-500">Belum ada data kuesioner.</td>
             </tr>
             @endforelse
           </tbody>
         </table>
-
-        
-  @if($kosong)
-    <div class="text-center text-gray-500 my-4">
-      Belum ada data untuk bulan ini.
-    </div>
-  @endif
   
       </div>
     </div>
@@ -169,23 +162,7 @@ function statusText($score) {
     }
 
     // Baru inisialisasi ulang
-    $('#hasilTable').DataTable({
-      responsive: true,
-      pageLength: 10,
-      language: {
-        search: "Cari:",
-        lengthMenu: "Tampilkan _MENU_ data per halaman",
-        zeroRecords: "Data tidak ditemukan",
-        info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-        infoEmpty: "Tidak ada data",
-        paginate: {
-          first: "Pertama",
-          last: "Terakhir",
-          next: "Berikutnya",
-          previous: "Sebelumnya"
-        }
-      }
-    });
+    $('#hasilTable').DataTable(\);
   });
 </script>
 

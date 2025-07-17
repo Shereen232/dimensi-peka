@@ -10,6 +10,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\AnalisisController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\GrafikController;
+use App\Http\Controllers\KelurahanController;
 
 // ✅ Group yang harus login dulu
 Route::middleware(['auth'])->group(function () {
@@ -46,9 +47,16 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/akun/update', [AkunController::class, 'update'])->name('akun.update');
     
 
-
+    // Riwayat
     Route::get('/riwayat', [RiwayatController::class, 'index'])->name('riwayat.index');
 
+    // Kelola Kelurahan
+    Route::get('/kelurahan', [KelurahanController::class, 'index'])->name('kelurahan.index');
+    Route::get('/kelurahan/create', [KelurahanController::class, 'createKelurahan'])->name('kelurahan.create');
+    Route::post('/kelurahan', [KelurahanController::class, 'storeKelurahan'])->name('kelurahan.store');
+    Route::get('/kelurahan/{id}/edit', [KelurahanController::class, 'editKelurahan'])->name('kelurahan.edit');
+    Route::put('/kelurahan/{id}', [KelurahanController::class, 'updateKelurahan'])->name('kelurahan.update');
+    Route::delete('/kelurahan/{id}', [KelurahanController::class, 'destroyKelurahan'])->name('kelurahan.destroy');
 
     // Analisis
 

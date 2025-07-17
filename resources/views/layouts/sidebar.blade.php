@@ -119,7 +119,7 @@
         </ul>
       </li>
 
-       <li class="relative px-6 py-3">
+      <li class="relative px-6 py-3">
         <a href="{{ url('analisis/laporan') }}"
           class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -141,6 +141,16 @@
               <span class="ml-4">Histori Aktivitas</span>
           </a>
       </li>
+
+     <li class="relative px-6 py-3">
+        <a href="{{ url('kelurahan') }}"
+          class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M3 7h18M3 12h18M3 17h18"/>
+          </svg>
+          <span class="ml-4">Kelola Kelurahan</span>
+        </a>
+      </li>
       
       @endif
 
@@ -157,8 +167,73 @@
           <span class="ml-4">Akun Saya</span>
         </a>
       </li>
+
+            {{-- Logout --}}
+      <li class="relative px-6 py-3">
+        <form method="POST" action="{{ route('logout') }}" id="logout-form">
+          @csrf
+          <button type="submit"
+            onclick="return confirmLogout(event)"
+            class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 text-gray-500 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400">
+            <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 11-4 0v-1m0-4V9a2 2 0 114 0v1" />
+            </svg>
+            <span>Logout</span>
+          </button>
+        </form>
+      </li>
+
     </ul>
   </div>
 </aside>
 
 <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function confirmLogout(event) {
+    event.preventDefault(); // Jangan langsung kirim form
+
+    Swal.fire({
+      title: 'Keluar dari aplikasi?',
+      text: "Anda akan keluar dari sesi saat ini.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Ya, Logout',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById('logout-form').submit();
+      }
+    });
+
+    return false;
+  }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+  function confirmLogout(event) {
+    event.preventDefault(); // Jangan langsung kirim form
+
+    Swal.fire({
+      title: 'Keluar dari aplikasi?',
+      text: "Anda akan keluar dari sesi saat ini.",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#6c757d',
+      confirmButtonText: 'Ya, Logout',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        document.getElementById('logout-form').submit();
+      }
+    });
+
+    return false;
+  }
+</script>
+
