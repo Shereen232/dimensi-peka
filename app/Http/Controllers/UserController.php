@@ -18,7 +18,8 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('user.create');
+        $listKelurahan = \App\Models\Kelurahan::all();
+        return view('user.create', compact('listKelurahan'));
     }
 
     public function store(Request $request)
@@ -63,7 +64,8 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = DB::table('users')->where('id', $id)->first();
-        return view('user.edit', compact('user'));
+        $listKelurahan = \App\Models\Kelurahan::all();
+        return view('user.edit', compact('user', 'listKelurahan'));
     }
 
     public function update(Request $request, $id)

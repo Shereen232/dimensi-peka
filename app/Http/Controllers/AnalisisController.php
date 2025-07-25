@@ -51,14 +51,10 @@ class AnalisisController extends Controller
         // Dropdown filter data
         $sekolahList = User::whereNotNull('sekolah')->distinct()->pluck('sekolah');
         $kelasList = User::whereNotNull('kelas')->distinct()->pluck('kelas');
-        $kelurahanList = [
-            'Bendan', 'Kramatsari', 'Tirto', 'Medono', 'Sokorejo', 'Noyontaan',
-            'Klego', 'Pekalongan Selatan', 'Jenggot', 'Kusuma Bangsa',
-            'Krapyak Kidul', 'Dukuh', 'Buaran', 'Tondano'
-        ];
+        $listKelurahan = \App\Models\Kelurahan::all();
 
         return view('analisis.responden', compact(
-            'riwayat', 'sekolahList', 'kelasList', 'kelurahanList',
+            'riwayat', 'sekolahList', 'kelasList', 'listKelurahan',
             'bulan', 'tahun', 'puskesmas', 'sekolah', 'kelas', 'kosong'
         ));
     }
@@ -66,23 +62,9 @@ class AnalisisController extends Controller
     public function exportLaporan()
     {
         // Daftar kelurahan tetap (meskipun tidak ada datanya akan tetap ditampilkan)
-       $kelurahanList = [
-            ['kelurahan' => 'Bendan', 'puskesmas' => 'Puskesmas Bendan'],
-            ['kelurahan' => 'Kramatsari', 'puskesmas' => 'Puskesmas Kramatsari'],
-            ['kelurahan' => 'Tirto', 'puskesmas' => 'Puskesmas Tirto'],
-            ['kelurahan' => 'Medono', 'puskesmas' => 'Puskesmas Medono'],
-            ['kelurahan' => 'Sokorejo', 'puskesmas' => 'Puskesmas Sokorejo'],
-            ['kelurahan' => 'Noyontaan', 'puskesmas' => 'Puskesmas Noyontaan'],
-            ['kelurahan' => 'Klego', 'puskesmas' => 'Puskesmas Klego'],
-            ['kelurahan' => 'Pekalongan Selatan', 'puskesmas' => 'Puskesmas Pekalongan Selatan'],
-            ['kelurahan' => 'Jenggot', 'puskesmas' => 'Puskesmas Jenggot'],
-            ['kelurahan' => 'Kusuma Bangsa', 'puskesmas' => 'Puskesmas Kusuma Bangsa'],
-            ['kelurahan' => 'Krapyak Kidul', 'puskesmas' => 'Puskesmas Krapyak Kidul'],
-            ['kelurahan' => 'Dukuh', 'puskesmas' => 'Puskesmas Dukuh'],
-            ['kelurahan' => 'Buaran', 'puskesmas' => 'Puskesmas Buaran'],
-            ['kelurahan' => 'Tondano', 'puskesmas' => 'Puskesmas Tondano'],
-        ];
-
+       $kelurahanList = \App\Models\Kelurahan::all()->map(function ($kelurahan) {
+            return ['kelurahan' => $kelurahan->nama];
+        })->toArray();
 
         // Ambil data riil dari DB
         $riwayat = DB::table('riwayat')
@@ -95,7 +77,6 @@ class AnalisisController extends Controller
 
         foreach ($kelurahanList as $entry) {
             $kel = $entry['kelurahan'];
-            $pusk = $entry['puskesmas'];
 
             $filtered = $riwayat->where('kelurahan', $kel);
 
@@ -106,7 +87,6 @@ class AnalisisController extends Controller
 
             $data[] = [
                 'kelurahan' => $kel,
-                'puskesmas' => $pusk,
                 'normal' => $normal,
                 'borderline' => $borderline,
                 'abnormal' => $abnormal,
@@ -141,11 +121,7 @@ class AnalisisController extends Controller
         $tahun = $request->tahun ?? date('Y');
 
         // Daftar kelurahan tetap
-        $kelurahanList = [
-            'Bendan', 'Kramatsari', 'Tirto', 'Medono', 'Sokorejo', 'Noyontaan',
-            'Klego', 'Pekalongan Selatan', 'Jenggot', 'Kusuma Bangsa',
-            'Krapyak Kidul', 'Dukuh', 'Buaran', 'Tondano'
-        ];
+        $kelurahanList = \App\Models\Kelurahan::all()->pluck('nama')->toArray();
 
         $data = [];
         $totalKeseluruhan = [
@@ -231,11 +207,7 @@ class AnalisisController extends Controller
         $tahun = $request->input('tahun', Carbon::now()->year);
 
         // Daftar kelurahan tetap
-        $kelurahanList = [
-            'Bendan', 'Kramatsari', 'Tirto', 'Medono', 'Sokorejo', 'Noyontaan',
-            'Klego', 'Pekalongan Selatan', 'Jenggot', 'Kusuma Bangsa',
-            'Krapyak Kidul', 'Dukuh', 'Buaran', 'Tondano'
-        ];
+        $kelurahanList = \App\Models\Kelurahan::all()->pluck('nama')->toArray();
 
         $data = [];
         $totalNormal = $totalBorderline = $totalAbnormal = 0;

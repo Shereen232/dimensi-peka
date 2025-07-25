@@ -32,8 +32,8 @@ function statusText($score) {
       <label for="puskesmas" class="block text-sm text-gray-600 dark:text-gray-400">Kelurahan</label>
       <select name="puskesmas" id="puskesmas" class="form-select dark:bg-gray-700">
         <option value="">-- Semua --</option>
-        @foreach($kelurahanList as $k)
-          <option value="{{ $k }}" {{ request('puskesmas') == $k ? 'selected' : '' }}>{{ $k }}</option>
+        @foreach($listKelurahan as $k)
+          <option value="{{ $k->nama }}" {{ request('puskesmas') == $k->nama ? 'selected' : '' }}>{{ $k->nama }}</option>
         @endforeach
       </select>
     </div>

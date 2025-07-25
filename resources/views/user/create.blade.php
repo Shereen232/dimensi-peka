@@ -40,20 +40,9 @@
             <label for="kelurahan" class="block font-medium">Kelurahan</label>
             <select name="kelurahan" class="w-full border p-2 rounded" required>
                 <option value="" disabled selected>Pilih kelurahan</option>
-                <option value="Bendan">Bendan</option>
-                <option value="Kramatsari">Kramatsari</option>
-                <option value="Tirto">Tirto</option>
-                <option value="Medono">Medono</option>
-                <option value="Sokorejo">Sokorejo</option>
-                <option value="Noyontaan">Noyontaan</option>
-                <option value="Tondano">Tondano</option>
-                <option value="Klego">Klego</option>
-                <option value="Pekalongan Selatan">Pekalongan Selatan</option>
-                <option value="Jenggot">Jenggot</option>
-                <option value="Buaran">Buaran</option>
-                <option value="Kusuma Bangsa">Kusuma Bangsa</option>
-                <option value="Krapyak Kidul">Krapyak Kidul</option>
-                <option value="Dukuh">Dukuh</option>
+                @foreach ($listKelurahan as $item)
+                    <option value="{{$item->nama}}">{{$item->nama}}</option>
+                @endforeach
             </select>
         </div>
 

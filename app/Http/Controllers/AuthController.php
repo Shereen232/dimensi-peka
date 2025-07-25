@@ -47,7 +47,8 @@ class AuthController extends Controller
 
      public function showRegister()
     {
-        return view('auth.register');
+        $listKelurahan = \App\Models\Kelurahan::all();
+        return view('auth.register', compact('listKelurahan'));
     }
 
 

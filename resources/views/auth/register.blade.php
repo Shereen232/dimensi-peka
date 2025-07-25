@@ -87,20 +87,9 @@
                 <span class="text-gray-700 dark:text-gray-400">Kelurahan</span>
                 <select id="kelurahan" name="kelurahan" required class="{{ $commonClass }}">
                   <option value="" disabled selected>Pilih kelurahan</option>
-                  <option value="Bendan">Bendan</option>
-                  <option value="Kramatsati">Kramatsati</option>
-                  <option value="Tirto">Tirto</option>
-                  <option value="Medono">Medono</option>
-                  <option value="Sokorejo">Sokorejo</option>
-                  <option value="Noyontaan">Noyontaan</option>
-                  <option value="Tondano">Tondano</option>
-                  <option value="Klego">Klego</option>
-                  <option value="Pekalongan Selatan">Pekalongan Selatan</option>
-                  <option value="Jenggot">Jenggot</option>
-                  <option value="Buaran">Buaran</option>
-                  <option value="Kusuma Bangsa">Kusuma Bangsa</option>
-                  <option value="Krapyak Kidul">Krapyak Kidul</option>
-                  <option value="Dukuh">Dukuh</option>
+                  @foreach ($listKelurahan as $item)
+                    <option value="{{$item->nama}}">{{$item->nama}}</option>
+                  @endforeach
                 </select>
               </label>
 

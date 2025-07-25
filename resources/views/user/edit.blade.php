@@ -37,12 +37,12 @@
             <label for="kelurahan" class="block font-medium">Kelurahan</label>
             <select name="kelurahan" class="w-full border p-2 rounded" required>
                 <option value="" disabled>Pilih kelurahan</option>
-                @foreach ([
-                    'Bendan', 'Kramatsari', 'Tirto', 'Medono', 'Sokorejo', 'Noyontaan',
-                    'Tondano', 'Klego', 'Pekalongan Selatan', 'Jenggot', 'Buaran',
-                    'Kusuma Bangsa', 'Krapyak Kidul', 'Dukuh'
-                ] as $kel)
-                    <option value="{{ $kel }}" {{ $user->kelurahan == $kel ? 'selected' : '' }}>{{ $kel }}</option>
+                @foreach ($listKelurahan as $item)
+                    @if ($item->nama == $user->kelurahan)
+                        <option value="{{$item->nama}}" selected>{{$item->nama}}</option>
+                    @else
+                        <option value="{{$item->nama}}">{{$item->nama}}</option>
+                    @endif
                 @endforeach
             </select>
         </div>
