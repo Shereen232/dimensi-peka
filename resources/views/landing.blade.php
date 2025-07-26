@@ -12,7 +12,7 @@
         <!-- Header -->
         <header class="bg-white shadow sticky top-0 z-50">
             <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-bold text-blue-600">Deteksi Dini Gejala Mental</h1>
+            <h1 class="text-xl font-bold text-blue-600">Deteksi Dini Gejala Mental Emosional</h1>
             <nav class="hidden md:flex gap-6 items-center">
                 <a href="#tentang" class="text-gray-600 hover:text-blue-600">Beranda</a>
                 <a href="#manfaat" class="text-gray-600 hover:text-blue-600">Formulir</a>
@@ -39,15 +39,15 @@
         <!-- Tentang -->
         <section id="tentang" class="py-20 bg-white">
             <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-            <img src="" class="w-full" data-aos="fade-right">
+            <img src="{{ asset('images/landing.jpg') }}" class="w-100 h-100" data-aos="fade-right">
             <div data-aos="fade-left">
-                <h3 class="text-3xl font-semibold text-blue-700 mb-4">Apa Itu MentalSehat?</h3>
+                <h3 class="text-3xl font-semibold text-blue-700 mb-4">Apa Itu Dimensi PEKA?</h3>
                 <p class="text-gray-600 mb-4">
-                MentalSehat adalah platform untuk mengevaluasi kesehatan mental Anda secara mandiri. Tes ini didesain berdasarkan indikator psikologis umum dan dapat memberikan wawasan awal mengenai kondisi emosional Anda.
+                Dimensi PEKA adalah platform untuk mengevaluasi kesehatan mental Anda secara mandiri. Tes ini didesain berdasarkan indikator psikologis umum dan dapat memberikan wawasan awal mengenai kondisi emosional Anda.
                 </p>
                 <ul class="list-disc list-inside text-gray-600 space-y-2">
                 <li>Privasi 100% terjaga</li>
-                <li>Tidak butuh akun atau login</li>
+                <li>Langsung Mendapatkan Hasil Secara Real-Time</li>
                 <li>Analisis langsung dan mudah dipahami</li>
                 </ul>
                 <a href="#"
@@ -118,7 +118,7 @@
             <h3 class="text-3xl font-bold text-blue-700 text-center mb-10" data-aos="fade-up">Pertanyaan Umum</h3>
             <div class="space-y-6">
                 @foreach([
-                ['q' => 'Apakah tes ini gratis?', 'a' => 'Ya, seluruh tes di MentalSehat sepenuhnya gratis dan dapat diakses kapan saja.'],
+                ['q' => 'Apakah tes ini gratis?', 'a' => 'Ya, seluruh tes di Dimensi PEKA sepenuhnya gratis dan dapat diakses kapan saja.'],
                 ['q' => 'Apakah hasilnya akurat?', 'a' => 'Tes ini memberikan gambaran awal, bukan diagnosis resmi. Untuk diagnosis, silakan konsultasi dengan profesional.'],
                 ['q' => 'Apakah data saya disimpan?', 'a' => 'Tidak. Semua data bersifat lokal dan tidak kami simpan.'],
                 ] as $faq)
@@ -136,7 +136,7 @@
             <div class="max-w-3xl mx-auto text-center px-4" data-aos="fade-up">
             <h3 class="text-3xl font-bold text-blue-700 mb-6">Ada Pertanyaan atau Masukan?</h3>
             <p class="text-gray-600 mb-6">Tim kami siap membantu Anda. Silakan kirimkan pertanyaan atau saran Anda.</p>
-            <a href="mailto:cs@mentalsehat.com" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700">
+            <a href="mailto:dimensi_peka.com" class="inline-block bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700">
                 Kirim Email
             </a>
             </div>
@@ -144,7 +144,7 @@
 
         <!-- Footer -->
         <footer class="text-center py-6 text-sm text-gray-500 border-t bg-sky-50">
-            &copy; {{ date('Y') }} MentalSehat. Dibuat dengan ❤️ untuk masyarakat Indonesia.
+            &copy; {{ date('Y') }} Dimensi PEKA.
         </footer>
 
         <!-- AOS Animations -->

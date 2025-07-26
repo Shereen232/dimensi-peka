@@ -29,7 +29,7 @@
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2"/>
             </svg>
-            <span class="ml-4">Kuesioner</span>
+            <span class="ml-4">Tes Skrining</span>
           </a>
         </li>
       @endif

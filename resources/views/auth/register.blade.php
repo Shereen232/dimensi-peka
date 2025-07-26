@@ -32,7 +32,7 @@
             <!-- Heading -->
             <div class="text-center mb-6">
               <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Registrasi Akun Responden</h1>
-              <p class="text-sm text-gray-600 dark:text-gray-400">Sistem Informasi Kesehatan Jiwa</p>
+              <p class="text-sm text-gray-600 dark:text-gray-400">Sistem Dimensi PEKA</p>
             </div>
 
             @if ($errors->any())

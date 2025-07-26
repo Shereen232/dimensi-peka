@@ -28,7 +28,7 @@
               <!-- Heading -->
             <div class="text-center mb-6">
                 <h1 class="text-2xl font-bold text-gray-800">Selamat Datang</h1>
-                <p class="text-sm text-gray-600">Sistem Informasi Kesehatan Jiwa</p>
+                <p class="text-sm text-gray-600">Sistem Dimensi PEKA</p>
             </div>
             {{-- Alert Error --}}
             @if ($errors->any())
