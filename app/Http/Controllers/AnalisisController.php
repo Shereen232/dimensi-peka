@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\RiwayatExport;
+use Illuminate\Support\Facades\Auth;
 
 
 
@@ -203,6 +204,9 @@ class AnalisisController extends Controller
 
     public function preview(Request $request)
     {
+        $user = User::find(Auth::user()->id);
+
+
         $bulan = $request->input('bulan', Carbon::now()->month);
         $tahun = $request->input('tahun', Carbon::now()->year);
 
@@ -245,6 +249,7 @@ class AnalisisController extends Controller
                 'borderline' => $borderline,
                 'abnormal' => $abnormal,
                 'total' => $total,
+                'user' => $user,
             ];
 
             $totalNormal += $normal;
@@ -262,6 +267,7 @@ class AnalisisController extends Controller
             'totalBorderline' => $totalBorderline,
             'totalAbnormal' => $totalAbnormal,
             'total' => $total,
+            'user' => $user,
         ]);
 
         return response($pdf->output(), 200)

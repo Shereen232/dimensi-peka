@@ -84,6 +84,8 @@
     Pekalongan, {{ now()->translatedFormat('d F Y') }}<br><br>
     Yang membuat,<br><br><br><br>
     (...................................)
+    <br>
+    ({{ $user->name  }})
   </div>
 
 </body>
