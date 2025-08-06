@@ -38,11 +38,15 @@
                             <td class="px-4 py-3 text-sm">
                                 <div class="flex items-center space-x-2">
                                     <a href="{{ route('user.edit', $user->id) }}" class="px-2 py-1 text-sm text-white bg-blue-600 rounded hover:bg-blue-700">Edit</a>
-                                    <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}" method="POST">
+                                    <form id="toggle-form-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="button" onclick="confirmDelete({{ $user->id }})"
-                                            class="px-2 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700">Hapus</button>
+                                        <button type="button"
+                                            onclick="confirmToggle({{ $user->id }}, '{{ $user->deleted_at ? 'aktifkan' : 'nonaktifkan' }}')"
+                                            class="px-2 py-1 text-sm text-white rounded transition
+                                                {{ $user->deleted_at ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700' }}">
+                                            {{ $user->deleted_at ? 'Aktifkan' : 'Nonaktifkan' }}
+                                        </button>
                                     </form>
                                 </div>
                             </td>
@@ -63,19 +67,19 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    function confirmDelete(userId) {
+    function confirmToggle(userId, actionText) {
         Swal.fire({
-            title: 'Yakin ingin menghapus?',
-            text: "User akan dihapus secara permanen!",
+            title: 'Yakin ingin ' + actionText + ' user ini?',
+            text: "Tindakan ini dapat dibatalkan.",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
             cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Ya, hapus!',
+            confirmButtonText: 'Ya, ' + actionText + '!',
             cancelButtonText: 'Batal'
         }).then((result) => {
             if (result.isConfirmed) {
-                document.getElementById('delete-form-' + userId).submit();
+                document.getElementById('toggle-form-' + userId).submit();
             }
         });
     }

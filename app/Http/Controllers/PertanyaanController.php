@@ -7,12 +7,9 @@ use Illuminate\Http\Request;
 
 class PertanyaanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $pertanyaans = Question::all();
+        $pertanyaans = Question::withTrashed()->get();
         return view('pertanyaan.index', compact('pertanyaans'));
     }
 
@@ -68,12 +65,21 @@ class PertanyaanController extends Controller
         return redirect()->route('pertanyaan.index')->with('success', 'Pertanyaan berhasil diupdate.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Question $pertanyaan)
+    public function destroy($id)
     {
-        $pertanyaan->delete();
-        return redirect()->route('pertanyaan.index')->with('success', 'Pertanyaan berhasil dihapus.');
+        $pertanyaan = Question::withTrashed()->where('id', $id)->first();
+
+        if ($pertanyaan->deleted_at) {
+            $pertanyaan->restore();
+            $message = 'Pertanyaan berhasil diaktifkan.';
+        } else {
+            $pertanyaan->delete();
+            $message = 'Pertanyaan berhasil dinonaktifkan.';
+        }
+
+        return redirect()->route('pertanyaan.index')->with('success', $message);
     }
+
+
+
 }

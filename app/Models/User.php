@@ -2,12 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
+    use HasFactory;
 
     // Nama tabel
     protected $table = 'users';
@@ -21,6 +26,7 @@ class User extends Authenticatable
 
     // Tanggal yang di-manage otomatis oleh Laravel
     public $timestamps = false; // karena kamu pakai created_at saja (tanpa updated_at)
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'nik',

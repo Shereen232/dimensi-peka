@@ -37,36 +37,27 @@
                 <tbody class="text-gray-800">
                     @forelse($pertanyaans as $p)
                     <tr class="hover:bg-gray-50">
-                        <td class="py-2 px-4 border-b">{{ $p->id }}</td>
+                        <td class="py-2 px-4 border-b">{{ $loop->iteration }}</td>
                         <td class="py-2 px-4 border-b">{{ $p->kode }}</td>
                         <td class="py-2 px-4 border-b">{{ $p->pertanyaan }}</td>
                         <td class="py-2 px-4 border-b">{{ $p->kategori }}</td>
                         <td class="py-2 px-4 border-b">
-                            <div class="flex gap-3">
-                                <!-- Edit -->
-                                <a href="{{ route('pertanyaan.edit', $p) }}"
-                                   class="text-indigo-600 hover:text-indigo-800 inline-flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                         viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                              d="M11 4h9m-9 0a2 2 0 00-2 2v16l4-4h7a2 2 0 002-2V4m-9 0H5a2 2 0 00-2 2v16l4-4h4" />
-                                    </svg>
-                                    Edit
+                            <div class="flex items-center gap-2">
+                                <!-- Tombol Edit -->
+                                <a href="{{ route('pertanyaan.edit', $p->id) }}"
+                                class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-white bg-indigo-500 rounded hover:bg-indigo-600 transition">
+                                    ✏️ Edit
                                 </a>
 
-                                <!-- Delete -->
-                                <form action="{{ route('pertanyaan.destroy', $p) }}" method="POST"
-                                      onsubmit="return confirm('Yakin ingin menghapus pertanyaan ini?')">
+                                <!-- Tombol Aktif / Nonaktif -->
+                                <form action="{{ route('pertanyaan.destroy', $p->id) }}" method="POST"
+                                    onsubmit="return confirm('Yakin ingin mengubah status pertanyaan ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                            class="text-red-600 hover:text-red-800 inline-flex items-center gap-1">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
-                                             viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                  d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                        Delete
+                                            class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-white rounded transition
+                                                {{ $p->deleted_at ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700' }}">
+                                        {{ $p->deleted_at ? '🟢 Aktifkan' : '🔴 Nonaktifkan' }}
                                     </button>
                                 </form>
                             </div>

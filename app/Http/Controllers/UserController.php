@@ -12,7 +12,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = DB::table('users')->get();
+        $users = User::withTrashed()->get();
         return view('user.index', compact('users'));
     }
 
@@ -110,23 +110,25 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'Data user berhasil diupdate!');
     }
 
-        public function destroy($id)
-        {
-            $this->setTriggerSessionVariables();
+    public function destroy($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
 
-            // Hapus semua data riwayat yang terhubung ke user
-            DB::table('riwayat')->where('user_id', $id)->delete();
-
-            // Hapus user
-            DB::table('users')->where('id', $id)->delete();
-
-            return redirect()->route('user.index')->with('success', 'User dan riwayatnya berhasil dihapus.');
+        if ($user->deleted_at) {
+            $user->restore();
+            $msg = 'User berhasil diaktifkan.';
+        } else {
+            $user->delete(); // soft delete
+            $msg = 'User berhasil dinonaktifkan.';
         }
+
+        return redirect()->route('user.index')->with('success', $msg);
+    }
 
 
     public function detailUser()
     {
-        $users = User::where('role', 'responden')->get();
+        $users = User::withTrashed()->where('role', 'responden')->get();
         return view('user.detail.index', compact('users'));
     }
 

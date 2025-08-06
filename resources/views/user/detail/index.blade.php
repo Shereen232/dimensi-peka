@@ -13,8 +13,8 @@
 
     <div class="w-full overflow-hidden rounded-lg shadow-xs">
       <div class="w-full overflow-x-auto">
-        <table class="w-full whitespace-no-wrap">
-          <thead>
+        <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300 border rounded-lg overflow-hidden">
+          <thead class="text-xs uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-300">
             <tr
               class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-300">
               <th class="px-4 py-3">No</th>
@@ -37,16 +37,26 @@
               <td class="px-4 py-3 text-sm">{{ $user->alamat }}</td>
               <td class="px-4 py-3 text-sm">{{ $user->kelurahan }}</td>
               <td class="px-4 py-3 text-sm">{{ $user->sekolah }}</td>
-              <td class="px-4 py-3 text-sm">
-                <a href="{{ route('user.edit', $user->id) }}"
-                  class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 text-xs">Edit</a>
-                <form action="{{ route('user.destroy', $user->id) }}" method="POST" class="inline">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit"
-                    class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600 text-xs"
-                    onclick="return confirm('Yakin ingin menghapus user ini?')">Hapus</button>
-                </form>
+              <td class="px-4 py-3">
+                <div class="flex items-center gap-2 justify-center">
+                  <!-- Edit Button -->
+                  <a href="{{ route('user.edit', $user->id) }}"
+                    class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1.5 rounded text-xs font-medium transition">
+                    ✏️ Edit
+                  </a>
+
+                  <!-- Aktif/Nonaktif Button -->
+                  <form id="toggle-form-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button"
+                            onclick="confirmToggle({{ $user->id }}, '{{ $user->deleted_at ? 'aktifkan' : 'nonaktifkan' }}')"
+                            class="px-3 py-1.5 text-xs font-medium text-white rounded transition
+                                  {{ $user->deleted_at ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700' }}">
+                      {{ $user->deleted_at ? 'Aktifkan' : 'Nonaktifkan' }}
+                    </button>
+                  </form>
+                </div>
               </td>
             </tr>
             @endforeach
@@ -56,4 +66,24 @@
     </div>
   </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmToggle(userId, actionText) {
+        Swal.fire({
+            title: 'Yakin ingin ' + actionText + ' user ini?',
+            text: "Tindakan ini dapat dibatalkan.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, ' + actionText + '!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('toggle-form-' + userId).submit();
+            }
+        });
+    }
+</script>
 @endsection
