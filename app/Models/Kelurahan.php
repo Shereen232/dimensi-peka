@@ -4,16 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Kelurahan extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
-    protected $table = 'kelurahan'; // Nama tabel di database
+    protected $table = 'kelurahan';
 
     protected $fillable = [
-        'nama', // Kolom yang dapat diisi massal
+        'nama',
+        'status',
     ];
+    
+    protected $dates = ['deleted_at'];
 
-    public $timestamps = false; // Matikan timestamps jika tidak menggunakan created_at dan updated_at
+    public $timestamps = false;
 }

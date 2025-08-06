@@ -11,6 +11,7 @@ use App\Http\Controllers\AnalisisController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\GrafikController;
 use App\Http\Controllers\KelurahanController;
+use App\Http\Controllers\PertanyaanController;
 
 // ✅ Group yang harus login dulu
 Route::middleware(['auth'])->group(function () {
@@ -77,6 +78,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/history', [HistoryController::class, 'index'])->name('history.index');
 
+    Route::get('/pertanyaan', [PertanyaanController::class, 'index'])->name('pertanyaan.index');
+    Route::get('/pertanyaan/create', [PertanyaanController::class, 'create'])->name('pertanyaan.create');
+    Route::post('/pertanyaan', [PertanyaanController::class, 'store'])->name('pertanyaan.store');
+    Route::get('/pertanyaan/{pertanyaan}/edit', [PertanyaanController::class, 'edit'])->name('pertanyaan.edit');
+    Route::put('/pertanyaan/{pertanyaan}', [PertanyaanController::class, 'update'])->name('pertanyaan.update');
+    Route::delete('/pertanyaan/{id}', [PertanyaanController::class, 'destroy'])->name('pertanyaan.destroy');
 
 
     // Logout
@@ -94,3 +101,5 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::get('/', function () {
     return view('landing');
 })->name('landing');
+
+

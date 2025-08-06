@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kelurahan;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class KelurahanController extends Controller
 {
     public function index()
     {
-        $kelurahan = DB::table('kelurahan')->get();
+        $kelurahan = Kelurahan::withTrashed()->get();
         return view('kelurahan.index', compact('kelurahan'));
     }
 
@@ -23,7 +23,7 @@ class KelurahanController extends Controller
             'nama' => 'required|string|max:255',
         ]);
 
-        DB::table('kelurahan')->insert([
+        Kelurahan::create([
             'nama' => $request->nama,
         ]);
 
@@ -32,7 +32,7 @@ class KelurahanController extends Controller
     }
     public function editKelurahan($id)
     {
-        $kelurahan = DB::table('kelurahan')->where('id', $id)->first();
+        $kelurahan = Kelurahan::withTrashed()->where('id', $id)->first();
         return view('kelurahan.form', compact('kelurahan'));
     }
     public function updateKelurahan(Request $request, $id)
@@ -41,7 +41,7 @@ class KelurahanController extends Controller
             'nama' => 'required|string|max:255',
         ]);
 
-        DB::table('kelurahan')->where('id', $id)->update([
+        Kelurahan::withTrashed()->where('id', $id)->update([
             'nama' => $request->nama,
         ]);
 
@@ -49,7 +49,10 @@ class KelurahanController extends Controller
     }
     public function destroyKelurahan($id)
     {
-        DB::table('kelurahan')->where('id', $id)->delete();
+        $kelurahan = Kelurahan::withTrashed()->where('id', $id)->first();
+        if ($kelurahan->deleted_at) $kelurahan->restore();
+        else $kelurahan->delete();
+
         return redirect()->route('kelurahan.index')->with('success', 'Kelurahan berhasil dihapus.');
     }
 

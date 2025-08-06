@@ -71,7 +71,7 @@
 
               <label class="block text-sm mb-3">
                 <span class="text-gray-700 dark:text-gray-400">Umur</span>
-                <input name="umur" type="number" required class="{{ $commonClass }}" value="{{ old('umur') }}">
+                <input name="umur" type="number" required min="11" max="18" class="{{ $commonClass }}" value="{{ old('umur') }}">
               </label>
 
               <label class="block text-sm mb-3">

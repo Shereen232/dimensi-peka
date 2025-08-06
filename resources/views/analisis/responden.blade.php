@@ -162,7 +162,7 @@ function statusText($score) {
     }
 
     // Baru inisialisasi ulang
-    $('#hasilTable').DataTable(\);
+    $('#hasilTable').DataTable();
   });
 </script>
 

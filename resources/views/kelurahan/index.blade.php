@@ -35,15 +35,14 @@
                    class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-600">
                   ✏️ Edit
                 </a>
-                <form id="delete-form-{{ $item->id }}" action="{{ route('kelurahan.destroy', $item->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus kelurahan ini?')">
+
+                <form id="delete-form" action="{{ route('kelurahan.destroy', $item->id) }}" method="POST" class="inline-block">
                   @csrf
                   @method('DELETE')
-                  <button type="button"
-                        class="px-2 py-1 bg-red-600 text-white rounded hover:bg-red-700"
-                        onclick="confirmDelete({{ $item->id }})">
-                    🗑️ Hapus
+                  <button type="submit"
+                          class="px-2 py-1 rounded text-white {{ $item->deleted_at ? 'bg-green-600 hover:bg-green-700' : 'bg-red-600 hover:bg-red-700' }}">
+                    {{ $item->deleted_at ? '🟢 Aktifkan' : '🔴 Nonaktifkan' }}
                   </button>
-
                 </form>
               </td>
             </tr>
@@ -58,23 +57,28 @@
   </div>
 </main>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-  function confirmDelete(id) {
-    Swal.fire({
-      title: 'Yakin ingin menghapus?',
-      text: "Data kelurahan yang dihapus tidak bisa dikembalikan!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#e3342f',
-      cancelButtonColor: '#6c757d',
-      confirmButtonText: 'Ya, hapus!',
-      cancelButtonText: 'Batal'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        document.getElementById('delete-form-' + id).submit();
-      }
+  $(document).ready(function() {
+    $(document).on('submit', '#delete-form', function(e) {
+        e.preventDefault();
+        const form = this;
+        Swal.fire({
+          title: 'Yakin ingin menghapus?',
+          text: "Data kelurahan yang dihapus tidak bisa dikembalikan!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#e3342f',
+          cancelButtonColor: '#6c757d',
+          confirmButtonText: 'Ya, hapus!',
+          cancelButtonText: 'Batal'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            form.submit();
+          }
+        });
     });
-  }
+  });
 </script>
 
 @endsection

@@ -59,7 +59,7 @@ class AuthController extends Controller
             'email'         => 'required|email|unique:users,email',
             'nik'           => 'required|digits:16|unique:users,nik',
             'password'      => 'required|min:6',
-            'umur'          => 'nullable|integer',
+            'umur'          => 'required|integer|min:11|max:18',
             'jenis_kelamin' => 'required',
             'alamat'        => 'nullable|string|max:255',
             'kelurahan'     => 'required|string|max:100',

@@ -38,10 +38,11 @@
                             <td class="px-4 py-3 text-sm">
                                 <div class="flex items-center space-x-2">
                                     <a href="{{ route('user.edit', $user->id) }}" class="px-2 py-1 text-sm text-white bg-blue-600 rounded hover:bg-blue-700">Edit</a>
-                                    <form action="{{ route('user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Hapus user ini?')">
+                                    <form id="delete-form-{{ $user->id }}" action="{{ route('user.destroy', $user->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="px-2 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700">Hapus</button>
+                                        <button type="button" onclick="confirmDelete({{ $user->id }})"
+                                            class="px-2 py-1 text-sm text-white bg-red-600 rounded hover:bg-red-700">Hapus</button>
                                     </form>
                                 </div>
                             </td>
@@ -59,5 +60,25 @@
         </div>
     </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmDelete(userId) {
+        Swal.fire({
+            title: 'Yakin ingin menghapus?',
+            text: "User akan dihapus secara permanen!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Ya, hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + userId).submit();
+            }
+        });
+    }
+</script>
 
 @endsection

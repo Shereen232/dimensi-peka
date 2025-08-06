@@ -1,4 +1,7 @@
-<aside class="z-20 hidden w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0">
+<aside
+    class="z-20 w-64 overflow-y-auto bg-white dark:bg-gray-800 md:block flex-shrink-0"
+    :class="{ 'hidden': !isSideMenuOpen, 'block': isSideMenuOpen }"
+  >
   <div class="py-4 text-gray-500 dark:text-gray-400">
     <a class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200" href="#">DIMENSI PEKA</a>
 
@@ -142,6 +145,21 @@
           </a>
       </li>
 
+      {{-- ...existing code... --}}
+
+      <li class="relative px-6 py-3">
+        <a href="{{ route('pertanyaan.index') }}"
+          class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.121 2.121 0 113 3L7 19.5 3 21l1.5-4L16.5 3.5z" />
+          </svg>
+          <span class="ml-4">Kelola Pertanyaan</span>
+        </a>
+      </li>
+
+{{-- ...existing code... --}}
+
      <li class="relative px-6 py-3">
         <a href="{{ url('kelurahan') }}"
           class="inline-flex items-center w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200">
@@ -189,32 +207,16 @@
 </aside>
 
 <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-  function confirmLogout(event) {
-    event.preventDefault(); // Jangan langsung kirim form
-
-    Swal.fire({
-      title: 'Keluar dari aplikasi?',
-      text: "Anda akan keluar dari sesi saat ini.",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#6c757d',
-      confirmButtonText: 'Ya, Logout',
-      cancelButtonText: 'Batal'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        document.getElementById('logout-form').submit();
+function main() {
+    return {
+      isSideMenuOpen: false,
+      toggleSideMenu() {
+        this.isSideMenuOpen = !this.isSideMenuOpen
       }
-    });
-
-    return false;
+    }
   }
-</script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
   function confirmLogout(event) {
     event.preventDefault(); // Jangan langsung kirim form
 

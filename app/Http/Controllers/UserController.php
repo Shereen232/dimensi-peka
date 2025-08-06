@@ -110,14 +110,19 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'Data user berhasil diupdate!');
     }
 
-    public function destroy($id)
-    {
-        // --- Panggil setTriggerSessionVariables() sebelum operasi DB::table() ---
-        $this->setTriggerSessionVariables();
+        public function destroy($id)
+        {
+            $this->setTriggerSessionVariables();
 
-        DB::table('users')->where('id', $id)->delete();
-        return redirect()->route('user.index')->with('success', 'User berhasil dihapus');
-    }
+            // Hapus semua data riwayat yang terhubung ke user
+            DB::table('riwayat')->where('user_id', $id)->delete();
+
+            // Hapus user
+            DB::table('users')->where('id', $id)->delete();
+
+            return redirect()->route('user.index')->with('success', 'User dan riwayatnya berhasil dihapus.');
+        }
+
 
     public function detailUser()
     {
